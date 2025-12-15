@@ -68,7 +68,7 @@ header {
     -webkit-backdrop-filter: blur(20px);
     width: 100%;
     margin: 0 auto;
-    transition: background-color 1.3s ease, box-shadow 0.3s ease, margin 0s ease, top 0s ease;
+    transition: background-color 1.3s ease, box-shadow 0.3s ease, margin 0s ease, top 0.4s ease;
     --header-border-color: rgba(0,0,0,0.1);
 }
 
@@ -468,7 +468,8 @@ header.scrolled .logo-icon {
     }
 }
 
-.step-icon {
+.step-visual {
+    position: relative;
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 50%;
@@ -477,16 +478,40 @@ header.scrolled .logo-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
+    transition: border-color 0.35s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 8px 18px -12px rgba(0,0,0,0.25);
 }
 
-.step.active .step-icon,
-.step:hover .step-icon {
+.step-visual.is-active {
     border-color: var(--color-primary);
 }
 
-.step:hover .step-icon span {
-        color: var(--color-primary);
+.step-icon-symbol {
+    z-index: 2;
+    color: var(--color-text-secondary);
+    transition: opacity 0.35s ease, transform 0.35s ease, color 0.35s ease;
+}
+
+.step-visual.is-active .step-icon-symbol {
+    opacity: 0;
+    transform: scale(0.82);
+}
+
+.step-icon-image {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.step-visual.is-active .step-icon-image {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .step-content h3 {
@@ -599,10 +624,10 @@ header.scrolled[data-section="hero"] {
     background: rgba(37, 100, 235, 0.041);
 }
 
-header.scrolled[data-section="hero"] .logo-icon,
+/* header.scrolled[data-section="hero"] .logo-icon,
 header.scrolled[data-section="hero"] .logo-text {
     color: #2563eb;
-}
+} */
 
 header.scrolled[data-section="hero"] .btn-contact {
     color: #2563eb;
@@ -620,10 +645,10 @@ header.scrolled[data-section="expertise"] {
     background: rgb(249 116 22 / 2%);
 }
 
-header.scrolled[data-section="expertise"] .logo-icon,
+/* header.scrolled[data-section="expertise"] .logo-icon,
 header.scrolled[data-section="expertise"] .logo-text {
     color: #f97316;
-}
+} */
 
 header.scrolled[data-section="expertise"] .btn-contact {
     color: #f97316;
@@ -641,10 +666,10 @@ header.scrolled[data-section="vision"] {
     background: rgba(234, 179, 8, 0.08);
 }
 
-header.scrolled[data-section="vision"] .logo-icon,
+/* header.scrolled[data-section="vision"] .logo-icon,
 header.scrolled[data-section="vision"] .logo-text {
     color: #eab308;
-}
+} */
 
 header.scrolled[data-section="vision"] .btn-contact {
     color: #eab308;
