@@ -163,7 +163,7 @@ header.scrolled::after {
 }
 
 .nav-link.active[data-color="orange"]::after {
-    background: #f97316;
+    background: #f9741681;
 }
 
 .nav-link.active[data-color="yellow"] {
@@ -183,21 +183,22 @@ header.scrolled::after {
     font-weight: 700;
     font-size: 1.25rem;
     letter-spacing: -0.025em;
+    transition: transform 0.3s ease;
 }
 
-.logo-icon 
- {
+.logo-icon {
     width: 67px;
     height: auto;
-    transition: color 0.3s ease;
-    position: absolute;
-    left: 171px;
-    top: 3px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
 }
-
 
 .logo-text {
     transition: color 0.3s ease;
+}
+
+header.scrolled .logo-icon {
+    transform: translate(40px, -2px) scale(0.95);
 }
 
 .btn-contact {
@@ -501,7 +502,7 @@ header.scrolled::after {
 
 .btn-cta {
     margin-top: 5rem;
-    background-color: var(--color-primary);
+    background-color:#f97316;;
     color: white;
     padding: 0.75rem 2rem;
     border-radius: var(--radius-full);
@@ -595,7 +596,7 @@ footer {
 header.scrolled[data-section="hero"] {
     --header-border-color: rgba(37, 99, 235, 0.7);
     --header-outline-color: rgba(37, 99, 235, 0.2);
-    background: rgba(37, 99, 235, 0.08);
+    background: rgba(37, 100, 235, 0.041);
 }
 
 header.scrolled[data-section="hero"] .logo-icon,
@@ -616,7 +617,7 @@ header.scrolled[data-section="hero"] .btn-contact:hover {
 header.scrolled[data-section="expertise"] {
     --header-border-color: rgba(249, 115, 22, 0.7);
     --header-outline-color: rgba(249, 115, 22, 0.2);
-    background: rgba(249, 115, 22, 0.08);
+    background: rgb(249 116 22 / 2%);
 }
 
 header.scrolled[data-section="expertise"] .logo-icon,
