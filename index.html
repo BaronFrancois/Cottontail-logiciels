@@ -27,13 +27,26 @@
     <header id="header">
         <div class="container header-inner">
             <div class="logo">
-                <img src="./images/logo_complet.png" alt="Cottontail" class="logo-image" />
+                <img src="./logo/dessin.svg" alt="Cottontail" class="logo-image logo-mobile" />
+                <img src="./images/logo_complet.png" alt="Cottontail" class="logo-image logo-desktop" />
             </div>
             <nav class="main-nav">
                 <a href="#hero" class="nav-link active" data-color="blue">Accueil</a>
                 <a href="#expertise" class="nav-link" data-color="orange">Expertise</a>
                 <a href="#vision" class="nav-link" data-color="yellow">Vision</a>
             </nav>
+
+            <!-- Mobile Navigation Cube -->
+            <div class="mobile-nav-cube" id="mobileNavCube">
+                <div class="cube-container">
+                    <div class="cube" id="navCube">
+                        <div class="cube-face cube-face-front" data-section="hero" data-color="blue">Accueil</div>
+                        <div class="cube-face cube-face-bottom" data-section="expertise" data-color="orange">Expertise</div>
+                        <div class="cube-face cube-face-back" data-section="vision" data-color="yellow">Vision</div>
+                        <div class="cube-face cube-face-top" data-section="hero" data-color="blue">Accueil</div>
+                    </div>
+                </div>
+            </div>
             <a href="#contact" class="btn-contact">Contact</a>
         </div>
     </header>
@@ -305,6 +318,60 @@
 
         // Set initial active section
         updateActiveNav();
+
+        // Mobile Navigation Cube
+        const navCube = document.getElementById('navCube');
+        const cubeFaces = document.querySelectorAll('.cube-face');
+        const sectionOrder = ['hero', 'expertise', 'vision'];
+        let currentCubePosition = 0;
+
+        function updateCubePosition(sectionId) {
+            const newPosition = sectionOrder.indexOf(sectionId);
+            if (newPosition !== -1 && newPosition !== currentCubePosition) {
+                currentCubePosition = newPosition;
+                navCube.style.transform = `rotateX(${newPosition * 90}deg)`;
+            }
+        }
+
+        // Update cube when scrolling
+        function updateMobileCube() {
+            const scrollPos = window.pageYOffset + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    if (sectionOrder.includes(sectionId)) {
+                        updateCubePosition(sectionId);
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateMobileCube);
+
+        // Click on cube face to navigate
+        cubeFaces.forEach(face => {
+            face.addEventListener('click', () => {
+                const targetSection = face.getAttribute('data-section');
+                const targetElement = document.getElementById(targetSection);
+
+                if (targetElement) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize cube position
+        updateMobileCube();
 
         // Smooth scroll for navigation links
         navLinks.forEach(link => {
