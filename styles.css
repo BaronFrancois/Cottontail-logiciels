@@ -47,7 +47,7 @@ body {
 /* Utilities */
 .container {
     max-width: 1280px;
-    margin: 0 0 0 auto;
+    margin: 0 auto;
     padding: 0;
 }
 
@@ -124,6 +124,9 @@ header.scrolled::after {
 @media (min-width: 768px) {
     .main-nav {
         display: flex;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 
@@ -391,6 +394,7 @@ header.scrolled::after {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
 }
 
 .hero h1 {
@@ -427,8 +431,21 @@ header.scrolled::after {
 /* Carousel */
 .carousel-wrapper {
     position: relative;
-    width: 100%;
-    max-width: 1400px;
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(0vw);
+}
+
+.carousel-spacer {
+    flex: 0 0 calc(50vw - 500px - 1rem);
+    min-width: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 767px) {
+    .carousel-spacer {
+        flex: 0 0 calc(50vw - 40% - 0.5rem);
+    }
 }
 
 .carousel-container {
@@ -1149,15 +1166,6 @@ header.scrolled[data-section="hero"] {
     background: rgba(37, 100, 235, 0.041);
 }
 
-header.scrolled[data-section="hero"] .btn-contact {
-    color: #2563eb;
-    border-color: #2563eb;
-}
-
-header.scrolled[data-section="hero"] .btn-contact:hover {
-    background-color: #2563eb;
-    color: white;
-}
 
 header.scrolled[data-section="expertise"] {
     --header-border-color: rgba(249, 115, 22, 0.7);
@@ -1165,15 +1173,6 @@ header.scrolled[data-section="expertise"] {
     background: rgb(249 116 22 / 3%);
 }
 
-header.scrolled[data-section="expertise"] .btn-contact {
-    color: #f97316;
-    border-color: #f97316;
-}
-
-header.scrolled[data-section="expertise"] .btn-contact:hover {
-    background-color: #f97316;
-    color: white;
-}
 
 header.scrolled[data-section="vision"] {
     --header-border-color: rgba(234, 179, 8, 0.7);
@@ -1181,15 +1180,6 @@ header.scrolled[data-section="vision"] {
     background: rgb(234 179 8 / 2%);
 }
 
-header.scrolled[data-section="vision"] .btn-contact {
-    color: #eab308;
-    border-color: #eab308;
-}
-
-header.scrolled[data-section="vision"] .btn-contact:hover {
-    background-color: #eab308;
-    color: white;
-}
 
 header[data-section="contact"] .nav-link {
     color: var(--color-text-secondary);
@@ -1200,19 +1190,10 @@ header[data-section="contact"] .nav-link.active {
     color: var(--color-text-main);
 }
 
-header[data-section="contact"] .btn-contact {
-    color: var(--color-text-main);
-    border-color: var(--color-text-main);
-}
-
-header[data-section="contact"] .btn-contact:hover {
-    background-color: var(--color-text-main);
-    color: #ffffff;
-}
 
 header.scrolled[data-section="contact"] {
     --header-outline-color: rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0);
     backdrop-filter: blur(20px);
 }
 
