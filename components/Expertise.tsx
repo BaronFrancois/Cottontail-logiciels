@@ -5,9 +5,9 @@ const Expertise: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const STEP_IMAGES = [
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBxrJaODiYYQarbG1ZX2rii6g2kTQsYLSa2g_wZ6n6VA-FH2lXsTtr-4NwiswMOY_U37hB6uUWMx7kDjxK8eMxX3i5QB5S_TDJC5IAdfLnW2WaoX5NWjtKkv4LS7b4p-Xn7YVSc5hThPqlwc9uXSqrkRkN3wvUAjWkrJ-RpX9wggC1VEBUCSHWmWFQx342qqcF1PfO9rCY0ETCF4aRGTmjplkdGJmmgWCRNYiKlif6aqXTLusSN4dEKXJu543hfAQQQFrd-YZTN2k2z",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuB_7Kt9mnP0xoj2zPXDDVvTaafS3NUOEwpXL1pgHwIjeNTguaho56Y3ABu14CHaEgd0oku7D30saL9VUp3d2kPvuvtUVIswbyVB7MrFNrdN4KJBu0CPhvQ_Z4IRMbswIbS_JD2w2GkxVLC8pcMckeCpvbd_0KJiOSHW0DtZ-lwSEfJ2DNgCPsV9UYqGMi-VdUkFUa-kB4Mq56IyYLKulgCm-lomRkJO3Bo4hnnxFsTGuvTE2IhwUTsj2FL3XaLNGSli1eQ_-fEgUZbA",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuB2N4ZIRjG71rT4FQA3x_rLg5e7TD3Cc6FXbVAzVMiVfi51AOJyMO8ZZGY66P7LilWFb_73VGcIJWBZLkJN8t_TPS5T8ss8zTwLT1SeXUypPnjwXsy9MKVsp_kgEHJkK7IqiSokuVE_9nBZhmp6EuDwvc3FNXU08xDRYH6pbdh0Por4C6SSK0_eVkOUatFB0kO6sXXQDhF3FHayucup_QC0j_608B9ImKP3PgCb25lYotg8HUW9B6xudkwih1vKxsCf0OLsM6Ld5hCS"
+    "./images/audit.webp",
+    "./images/conception.jpg",
+    "./images/realisation.jpeg"
   ];
 
   useEffect(() => {
