@@ -183,61 +183,15 @@ header.scrolled::after {
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-weight: 700;
-    font-size: 1.25rem;
-    letter-spacing: -0.025em;
-    transition: transform 0.3s ease;
+    height: 72px;
 }
 
-/* Logo Video Animation */
-.logo-video {
-    width: 200px;
-    height: auto;
-    filter: invert(1);
-    mix-blend-mode: multiply;
-    transition: opacity 0.5s ease;
-    position: absolute;
-    top: -50px;
-    left: 150px;;
+.logo-image {
+    height: 85px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
-
-/* On dark backgrounds, use screen blend mode */
-header[data-section="contact"] .logo-video {
-    filter: none;
-    mix-blend-mode: screen;
-}
-
-.logo-video.hidden {
-    display: none;
-}
-
-.logo-icon {
-    width: 67px;
-    height: auto;
-    transition: color 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
-    position: relative;
-    opacity: 0;
-    left: 50px;
-    top: -5px;
-}
-
-.logo-icon.visible {
-    opacity: 1;
-}
-
-.logo-text {
-    transition: color 0.3s ease, opacity 0.5s ease;
-    opacity: 0;
-}
-
-.logo-text.visible {
-    opacity: 1;
-}
-
-/* header.scrolled .logo-icon {
-    transform: translate(40px, -2px) scale(0.95);
-} */
 
 .btn-contact {
     position: relative;
@@ -666,8 +620,8 @@ header[data-section="contact"] .logo-video {
 /* Contact Section - Bento Style */
 .contact {
     padding: 6rem 1.5rem;
-    background-color: #0a1628;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: var(--color-text-main);
 }
 
 .contact-header {
@@ -691,7 +645,7 @@ header[data-section="contact"] .logo-video {
 
 .contact-header p {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--color-text-secondary);
     font-weight: 400;
 }
 
@@ -720,21 +674,22 @@ header[data-section="contact"] .logo-video {
 
 /* Bento Card Base */
 .bento-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border-style: outset;
+    border: 1px solid #d4d4d84d;
     border-radius: 1.5rem;
     padding: 1.5rem;
     transition: all 0.3s ease;
     text-decoration: none;
-    color: inherit;
+    color: var(--color-text-main);
     display: flex;
     flex-direction: column;
 }
 
 .bento-card:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: #ffffff;
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
 }
 
 /* Bento Map - Large card spanning 2 columns */
@@ -774,6 +729,7 @@ header[data-section="contact"] .logo-video {
     height: 100%;
     min-height: 250px;
     border: none;
+    filter: grayscale(0);
 }
 
 @media (min-width: 1024px) {
@@ -837,26 +793,26 @@ header[data-section="contact"] .logo-video {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-secondary);
 }
 
 .bento-value {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-text-main);
     margin: 0;
 }
 
 .bento-sub {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-secondary);
 }
 
 /* CTA Card */
 .bento-cta {
     position: relative;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #f5f5f5, #ffffff);
+    border: 1px solid #e5e7eb;
     justify-content: center;
     text-align: center;
     padding: 2rem 1.5rem;
@@ -881,9 +837,9 @@ header[data-section="contact"] .logo-video {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(10, 22, 40, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1;
 }
 
@@ -924,19 +880,19 @@ header[data-section="contact"] .logo-video {
 
 .bento-cta:hover {
     transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: #d4d4d8;
 }
 
 .bento-cta h3 {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #ffffff;
+    color: var(--color-text-main);
 }
 
 .bento-cta p {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--color-text-secondary);
     margin-bottom: 1.5rem;
 }
 
@@ -961,27 +917,30 @@ header[data-section="contact"] .logo-video {
 }
 
 .bento-btn-primary {
-    background: rgba(255, 255, 255, 0.1);
+    background: #111827;
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid #d4d4d84d;
+    border-style: outset;
     backdrop-filter: blur(10px);
 }
 
 .bento-btn-primary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #000000;
     transform: scale(1.05);
 }
 
 .bento-btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: var(--color-text-main);
+    border: 1px solid #d4d4d84d;
+    border-style: outset;
     backdrop-filter: blur(10px);
 }
 
 .bento-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     transform: scale(1.05);
+    backdrop-filter: blur(12px);
 }
 
 /* Footer */
@@ -1000,11 +959,6 @@ header.scrolled[data-section="hero"] {
     background: rgba(37, 100, 235, 0.041);
 }
 
-/* header.scrolled[data-section="hero"] .logo-icon,
-header.scrolled[data-section="hero"] .logo-text {
-    color: #2563eb;
-} */
-
 header.scrolled[data-section="hero"] .btn-contact {
     color: #2563eb;
     border-color: #2563eb;
@@ -1020,11 +974,6 @@ header.scrolled[data-section="expertise"] {
     --header-outline-color: rgba(249, 115, 22, 0.2);
     background: rgb(249 116 22 / 3%);
 }
-
-/* header.scrolled[data-section="expertise"] .logo-icon,
-header.scrolled[data-section="expertise"] .logo-text {
-    color: #f97316;
-} */
 
 header.scrolled[data-section="expertise"] .btn-contact {
     color: #f97316;
@@ -1042,11 +991,6 @@ header.scrolled[data-section="vision"] {
     background: rgb(234 179 8 / 2%);
 }
 
-/* header.scrolled[data-section="vision"] .logo-icon,
-header.scrolled[data-section="vision"] .logo-text {
-    color: #eab308;
-} */
-
 header.scrolled[data-section="vision"] .btn-contact {
     color: #eab308;
     border-color: #eab308;
@@ -1057,34 +1001,27 @@ header.scrolled[data-section="vision"] .btn-contact:hover {
     color: white;
 }
 
-/* Contact section - white theme on dark background */
-header[data-section="contact"] .logo-icon,
-header[data-section="contact"] .logo-text {
-    color: #ffffff;
-}
-
 header[data-section="contact"] .nav-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-text-secondary);
 }
 
 header[data-section="contact"] .nav-link:hover,
 header[data-section="contact"] .nav-link.active {
-    color: #ffffff;
+    color: var(--color-text-main);
 }
 
 header[data-section="contact"] .btn-contact {
-    color: #ffffff;
-    border-color: #ffffff;
+    color: var(--color-text-main);
+    border-color: var(--color-text-main);
 }
 
 header[data-section="contact"] .btn-contact:hover {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--color-text-main);
+    color: #ffffff;
 }
 
 header.scrolled[data-section="contact"] {
-    --header-outline-color: rgba(255, 255, 255, 0.15);
-    background: rgba(10, 22, 40, 0.4);
+    --header-outline-color: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
 }
-
