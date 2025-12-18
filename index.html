@@ -107,19 +107,6 @@
                         <div class="carousel-spacer"></div>
                     </div>
 
-                    <div class="carousel-controls">
-                        <button class="nav-btn nav-prev" onclick="scrollCarousel(-1)">
-                            <span class="material-symbols-outlined">arrow_back_ios_new</span>
-                        </button>
-                        <div class="dots" id="dots-container">
-                            <div class="dot active" onclick="scrollToIndex(0)"></div>
-                            <div class="dot" onclick="scrollToIndex(1)"></div>
-                            <div class="dot" onclick="scrollToIndex(2)"></div>
-                        </div>
-                        <button class="nav-btn nav-next" onclick="scrollCarousel(1)">
-                            <span class="material-symbols-outlined">arrow_forward_ios</span>
-                        </button>
-                    </div>
                 </div>
             </div>
         </section>
@@ -494,6 +481,225 @@
                 behavior: 'smooth'
             });
         }
+
+        // ==========================================
+        // Scroll vertical → Navigation des slides
+        // Desktop uniquement
+        // ==========================================
+        (function() {
+            if (window.innerWidth < 768) return; // Désactivé sur mobile
+
+            const heroSection = document.getElementById('hero');
+            const heroTitle = heroSection.querySelector('h1');
+            const carouselWrapper = document.querySelector('.carousel-wrapper');
+            const expertiseSection = document.getElementById('expertise');
+            let isAnimating = false;
+            let lastWheelTime = 0;
+            const totalSlides = projectCards.length;
+            const heroScrollOffset = 16;
+
+            // Système d'activation du scroll hijacking plus robuste
+            let scrollHijackEnabled = false;
+            let isCarouselHovering = false;
+            let rapidScrollCount = 0;
+            let lastRapidScrollTime = 0;
+            let hijackReenableTimer = null;
+
+            // Activer le hijacking uniquement au survol du carousel
+            if (carousel) {
+                carousel.addEventListener('mouseenter', () => {
+                    isCarouselHovering = true;
+                    scrollHijackEnabled = true;
+                });
+
+                carousel.addEventListener('mouseleave', () => {
+                    isCarouselHovering = false;
+                    scrollHijackEnabled = false;
+                    if (hijackReenableTimer) {
+                        clearTimeout(hijackReenableTimer);
+                        hijackReenableTimer = null;
+                    }
+                });
+            }
+
+            // Récupère l'index de la slide actuellement visible
+            function getCurrentSlideIndex() {
+                const containerCenter = carousel.getBoundingClientRect().left + carousel.offsetWidth / 2;
+                let closestIndex = 0;
+                let minDistance = Infinity;
+
+                projectCards.forEach((card, index) => {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+                    const distance = Math.abs(containerCenter - cardCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+
+                return closestIndex;
+            }
+
+            // Scroll vers le titre h1 du hero
+            function scrollToHeroTitle() {
+                isAnimating = true;
+                const headerHeight = header.offsetHeight;
+                const targetPosition = Math.max(
+                    heroTitle.offsetTop - headerHeight - heroScrollOffset,
+                    0
+                );
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                setTimeout(() => { isAnimating = false; }, 600);
+            }
+
+            // Scroll vers une slide spécifique (avec marquage animation)
+            function scrollToSlide(index) {
+                isAnimating = true;
+                scrollToIndex(index);
+                setTimeout(() => { isAnimating = false; }, 600);
+            }
+
+            // Vérifie si on est au-dessus du hero (tout en haut de la page)
+            function isAboveHero() {
+                const headerHeight = header.offsetHeight;
+                const triggerPoint = Math.max(
+                    heroTitle.offsetTop - headerHeight - heroScrollOffset,
+                    0
+                );
+                return window.scrollY < triggerPoint;
+            }
+
+            // Vérifie si on arrive depuis la section expertise (en remontant)
+            function isAtExpertiseTop() {
+                const rect = expertiseSection.getBoundingClientRect();
+                return rect.top >= 0 && rect.top <= window.innerHeight;
+            }
+
+            // Vérifie si le carousel est bien visible à l'écran
+            function isCarouselInView() {
+                const rect = carouselWrapper.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const visibleTop = Math.max(0, rect.top);
+                const visibleBottom = Math.min(viewportHeight, rect.bottom);
+                const visibleHeight = visibleBottom - visibleTop;
+                return visibleHeight > rect.height * 0.4;
+            }
+
+            // Vérifie si le titre hero est visible
+            function isHeroTitleInView() {
+                const rect = heroTitle.getBoundingClientRect();
+                return rect.top >= -50 && rect.bottom <= window.innerHeight + 50;
+            }
+
+            // Gestionnaire du scroll vertical
+            function handleWheelScroll(e) {
+                if (window.innerWidth < 768) return;
+                if (!isCarouselHovering) return;
+                if (!scrollHijackEnabled) return;
+                if (Math.abs(e.deltaY) < 30) return;
+
+                const now = Date.now();
+
+                // Détection de scroll rapide répété (échappatoire utilisateur)
+                if (now - lastRapidScrollTime < 150) {
+                    rapidScrollCount++;
+                    if (rapidScrollCount > 4) {
+                        // L'utilisateur force le scroll, désactiver temporairement
+                        scrollHijackEnabled = false;
+                        if (hijackReenableTimer) {
+                            clearTimeout(hijackReenableTimer);
+                        }
+                        hijackReenableTimer = setTimeout(() => {
+                            if (isCarouselHovering) {
+                                scrollHijackEnabled = true;
+                            }
+                            rapidScrollCount = 0;
+                            hijackReenableTimer = null;
+                        }, 1500);
+                        return; // Laisser le scroll natif
+                    }
+                } else {
+                    rapidScrollCount = 0;
+                }
+                lastRapidScrollTime = now;
+
+                // Throttling: bloquer seulement si une animation est en cours
+                if (now - lastWheelTime < 600) {
+                    if (isAnimating) {
+                        e.preventDefault();
+                    }
+                    return;
+                }
+
+                // CAS 1: On est tout en haut et on scroll vers le bas → aller au titre
+                if (isAboveHero() && e.deltaY > 0) {
+                    e.preventDefault();
+                    lastWheelTime = now;
+                    scrollToHeroTitle();
+                    return;
+                }
+
+                // CAS 2: On est sur le titre et on scroll vers le bas → aller à la slide 0
+                if (isHeroTitleInView() && !isCarouselInView() && e.deltaY > 0) {
+                    e.preventDefault();
+                    lastWheelTime = now;
+                    scrollToSlide(0);
+                    return;
+                }
+
+                // CAS 3: On est sur le carousel
+                if (isCarouselInView()) {
+                    const currentSlide = getCurrentSlideIndex();
+
+                    if (e.deltaY > 0) {
+                        // Scroll vers le bas
+                        if (currentSlide < totalSlides - 1) {
+                            e.preventDefault();
+                            lastWheelTime = now;
+                            scrollToSlide(currentSlide + 1);
+                        }
+                        // Dernière slide → laisser continuer vers expertise
+                    } else if (e.deltaY < 0) {
+                        // Scroll vers le haut
+                        if (isAtExpertiseTop()) {
+                            e.preventDefault();
+                            lastWheelTime = now;
+                            scrollToHeroTitle();
+                            return;
+                        }
+                        if (currentSlide > 0) {
+                            e.preventDefault();
+                            lastWheelTime = now;
+                            scrollToSlide(currentSlide - 1);
+                        } else {
+                            e.preventDefault();
+                            lastWheelTime = now;
+                            scrollToHeroTitle();
+                        }
+                    }
+                    return;
+                }
+
+                // CAS 4: On remonte depuis expertise → aller au titre
+                if (isAtExpertiseTop() && e.deltaY < 0) {
+                    e.preventDefault();
+                    lastWheelTime = now;
+                    scrollToHeroTitle();
+                    // Remettre le carousel sur la dernière slide
+                    setTimeout(() => {
+                        scrollToSlide(totalSlides - 1);
+                    }, 300);
+                    return;
+                }
+            }
+
+            window.addEventListener('wheel', handleWheelScroll, { passive: false });
+        })();
 
     </script>
 <script type="module" src="/index.tsx"></script>
