@@ -1553,13 +1553,15 @@ header.scrolled[data-section="contact"] {
     transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
-    /* Délai pour que le contenu apparaisse APRÈS le mouvement */
-    transition: opacity 0.4s ease 0.6s;
+    /* Fade OUT : rapide, sans délai */
+    transition: opacity 0s ease-out;
 }
 
-/* Quand le contenu disparaît, pas de délai */
-.unified-phone .phone-content.hiding {
-    transition: opacity 0.3s ease 0s;
+/* Fade IN : avec délai (après le mouvement du téléphone) */
+[data-current-phase="1"] .unified-phone .content-phase-1,
+[data-current-phase="2"] .unified-phone .content-phase-2,
+[data-current-phase="3"] .unified-phone .content-phase-3 {
+    transition: opacity 0.4s ease-in 0.5s;
 }
 
 /* === Position Phase 1: Petit, en bas du diagramme === */
