@@ -115,7 +115,32 @@
 
         <section class="expertise" id="expertise">
             <!-- Animation Expertise - 3 phases avec scroll hijacking -->
-            <div class="expertise-animation" id="expertiseAnimation">
+            <div class="expertise-animation" id="expertiseAnimation" data-current-phase="1">
+
+                <!-- Téléphone unique qui se déplace entre les phases -->
+                <div class="unified-phone" id="unifiedPhone">
+                    <img src="./images/expertise/blank-phone.png" alt="Phone" class="phone-image">
+
+                    <!-- Contenu Phase 1: Loader -->
+                    <div class="phone-content content-phase-1">
+                        <div class="phone-loader">
+                            <div class="loader-spinner"></div>
+                        </div>
+                    </div>
+
+                    <!-- Contenu Phase 2: Logo Lupin -->
+                    <div class="phone-content content-phase-2">
+                        <div class="lupin-logo-container">
+                            <img src="./images/expertise/logo_lupin.png" alt="Lupin" class="lupin-logo">
+                            <span class="lupin-loading-text">Lupin prépare votre espace...</span>
+                        </div>
+                    </div>
+
+                    <!-- Contenu Phase 3: Screenshot -->
+                    <div class="phone-content content-phase-3">
+                        <img src="./images/expertise/screenshot-phase3.jpg" alt="Application Lupin" class="phone-screenshot">
+                    </div>
+                </div>
 
                 <!-- Phase 1: Diagramme complet -->
                 <div class="expertise-phase phase-1 active" data-phase="1">
@@ -155,15 +180,6 @@
                         <!-- Boîte: Utilisateur (bas centre) -->
                         <div class="diagram-box box-user">
                             <span class="box-label">utilisateur</span>
-                        </div>
-
-                        <!-- Téléphone petit en bas -->
-                        <div class="phone-container phone-small">
-                            <img src="./images/expertise/blank-phone.png" alt="Phone" class="phone-image">
-                            <!-- Loader cercle -->
-                            <div class="phone-loader">
-                                <div class="loader-spinner"></div>
-                            </div>
                         </div>
 
                         <!-- Labels sur les connexions -->
@@ -230,31 +246,12 @@
                         <div class="phase-2-line-vertical"></div>
                         <div class="phase-2-line-left"></div>
                         <div class="phase-2-line-right"></div>
-
-                        <!-- Téléphone (centre, plus grand) -->
-                        <div class="phone-container phone-medium">
-                            <img src="./images/expertise/blank-phone.png" alt="Phone" class="phone-image">
-                            <!-- Logo Lupin avec effet clignotement -->
-                            <div class="lupin-logo-container">
-                                <img src="./images/expertise/logo_lupin.png" alt="Lupin" class="lupin-logo">
-                                <span class="lupin-loading-text">Lupin prépare votre espace...</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Phase 3: Téléphone centré + Screenshot + Texte Apple -->
+                <!-- Phase 3: Texte Apple style -->
                 <div class="expertise-phase phase-3" data-phase="3">
                     <div class="phase3-content">
-                        <!-- Téléphone grande taille avec screenshot -->
-                        <div class="phone-container phone-large">
-                            <img src="./images/expertise/blank-phone.png" alt="Phone" class="phone-image">
-                            <!-- Screenshot dans l'écran -->
-                            <div class="phone-screen">
-                                <img src="./images/expertise/screenshot-phase3.jpg" alt="Application Lupin" class="phone-screenshot">
-                            </div>
-                        </div>
-
                         <!-- Texte Apple style -->
                         <div class="apple-text">
                             <p class="apple-line line-1">Vous avez une idée.</p>
@@ -985,6 +982,9 @@
 
                 // Ajouter active à la nouvelle phase
                 phases[phaseIndex].classList.add('active');
+
+                // Mettre à jour l'attribut pour le téléphone unifié
+                expertiseAnimation.setAttribute('data-current-phase', phaseIndex + 1);
 
                 currentPhase = phaseIndex;
 

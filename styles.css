@@ -1527,16 +1527,85 @@ header.scrolled[data-section="contact"] {
     pointer-events: auto;
 }
 
-/* Animations d'entrée des téléphones par phase */
-.expertise-phase .phone-container {
-    opacity: 0;
-    transform: scale(0.8);
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.6s ease;
+/* ==========================================
+   Téléphone Unifié - Se déplace entre les phases
+   ========================================== */
+.unified-phone {
+    position: absolute;
+    z-index: 100;
+    /* Position fixe au centre - on utilise transform pour tout */
+    top: 50%;
+    left: 50%;
+    /* Transition fluide uniquement sur transform */
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.expertise-phase.active .phone-container {
+.unified-phone .phone-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Contenus du téléphone - cachés par défaut */
+.unified-phone .phone-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    /* Délai pour que le contenu apparaisse APRÈS le mouvement */
+    transition: opacity 0.4s ease 0.6s;
+}
+
+/* Quand le contenu disparaît, pas de délai */
+.unified-phone .phone-content.hiding {
+    transition: opacity 0.3s ease 0s;
+}
+
+/* === Position Phase 1: Petit, en bas du diagramme === */
+[data-current-phase="1"] .unified-phone {
+    /* translateY positif = vers le bas depuis le centre */
+    transform: translate(-49.7%, 14.9%) scale(0.9);
+}
+
+[data-current-phase="1"] .unified-phone .content-phase-1 {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(2.4);
+}
+
+/* === Position Phase 2: Moyen, centré === */
+[data-current-phase="2"] .unified-phone {
+    /* Centré verticalement, légèrement plus grand */
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+[data-current-phase="2"] .unified-phone .content-phase-2 {
+    opacity: 1;
+    transform: translate(-50%, -64%) scale(4.45);
+}
+
+/* === Position Phase 3: Grand, centré === */
+[data-current-phase="3"] .unified-phone {
+    /* Centré, encore plus grand */
+    transform: translate(-50%, -70%) scale(1.8);
+}
+
+[data-current-phase="3"] .unified-phone .content-phase-3 {
+    opacity: 1;
+    width: 129px;
+    height: 268px;
+    border-radius: 3px;
+    overflow: hidden;
+    top: 12%;
+    left: 49.8%;
+    transform: translateX(-50%);
+}
+
+[data-current-phase="3"] .unified-phone .phone-screenshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 
 /* ==========================================
@@ -1611,7 +1680,7 @@ header.scrolled[data-section="contact"] {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 100;
     background-color: #ffffff00;
     border: none;
 }
@@ -2005,39 +2074,7 @@ header.scrolled[data-section="contact"] {
     top: -125px;
 }
 
-/* Téléphone */
-.phone-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.8s ease;
-}
-
-/* Téléphone - styles de base */
-.phone-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-/* === PHASE 1 : Téléphone petit === */
-.phase-1 .phone-container {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translate(-48%, -151%) scale(4);
-    z-index: 2;
-}
-.phase-1.active .phone-container {
-    transform: translate(-48%, -151%) scale(5.3);
-}
-.phase-1 .phone-image {
-    width: 120px;
-}
-
-/* === PHASE 1 : Loader cercle === */
+/* === Loader cercle (téléphone unifié) === */
 .phone-loader {
     position: absolute;
     top: 50%;
@@ -2066,25 +2103,7 @@ header.scrolled[data-section="contact"] {
     }
 }
 
-/* === PHASE 2 : Téléphone moyen === */
-.phase-2 .phone-container {
-    width: 150px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -150%) scale(4.2);
-    z-index: 10;
-}
-.phase-2.active .phone-container {
-    transform: translate(-50%, -150%) scale(5.5);
-}
-.phase-2 .phone-image {
-    width: 150px;
-    position: relative;
-    bottom: 0;
-}
-
-/* === PHASE 2 : Logo Lupin avec clignotement === */
+/* === Logo Lupin avec clignotement (téléphone unifié) === */
 .lupin-logo-container {
     position: absolute;
     top: 50%;
@@ -2146,21 +2165,6 @@ header.scrolled[data-section="contact"] {
         opacity: 0;
         filter: brightness(1);
     }
-}
-
-/* === PHASE 3 : Téléphone grand === */
-.phase-3 .phone-container {
-    width: 280px;
-    position: relative;
-    transform: scale(3.5) translateY(-14px);
-}
-.phase-3.active .phone-container {
-    transform: scale(4.5) translateY(-14px);
-}
-.phase-3 .phone-image {
-    width: 280px;
-    position: relative;
-    bottom: 0;
 }
 
 /* Flèches SVG */
@@ -2261,117 +2265,6 @@ header.scrolled[data-section="contact"] {
     gap: 3rem;
 }
 
-/* Écran du téléphone avec interface LLM - masqué pour le moment */
-.phone-screen {
-    display: none;
-    position: absolute;
-    top: 3.5%;
-    left: 5.5%;
-    right: 5.5%;
-    bottom: 3.5%;
-    border-radius: 28px;
-    overflow: hidden;
-    background: #f5f5f5;
-}
-
-/* Phase 3 : téléphone centré et agrandi */
-.phase-3 .phone-container {
-    width: 280px;
-    position: relative;
-    transform: scale(3.5) translateY(-14px);
-}
-.phase-3.active .phone-container {
-    transform: scale(4.5) translateY(-14px);
-}
-
-.phase-3 .phone-image {
-    width: 286px;
-}
-
-/* Activer l'écran du téléphone dans la phase 3 */
-.phase-3 .phone-screen {
-    display: block;
-    width: 54.3px;
-    height: 117px;
-    background-color: #ffffff00;
-    background-blend-mode: color;
-    border-radius: 3px;
-    position: absolute;
-    left: 112.4px;
-    top: 15px;
-}
-
-.phone-screenshot {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-}
-
-.llm-interface {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-}
-
-.llm-header {
-    padding: 1rem;
-    background: #f97316;
-    text-align: center;
-}
-
-.llm-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.llm-messages {
-    flex: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    overflow-y: auto;
-}
-
-.llm-message {
-    max-width: 85%;
-    padding: 0.6rem 0.9rem;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    line-height: 1.4;
-}
-
-.llm-message.user {
-    align-self: flex-end;
-    background: #f97316;
-    color: #ffffff;
-}
-
-.llm-message.assistant {
-    align-self: flex-start;
-    background: #e5e7eb;
-    color: #000;
-}
-
-.llm-message p {
-    margin: 0;
-}
-
-.llm-input {
-    padding: 0.75rem 1rem;
-    border-top: 1px solid #e5e7eb;
-    background: #fafafa;
-}
-
-.llm-placeholder {
-    font-size: 0.7rem;
-    color: #9ca3af;
-}
-
 /* Texte style Apple */
 .apple-text {
     text-align: center;
@@ -2379,7 +2272,7 @@ header.scrolled[data-section="contact"] {
     flex-direction: column;
     gap: 0.5rem;
     position: relative;
-    top: 90px;
+    top: 180px;
 }
 
 .apple-line {
