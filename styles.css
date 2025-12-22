@@ -607,8 +607,8 @@ header.scrolled::after {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
-    height: 100vh;
+    height: calc(100vh - 72px); /* 100vh - hauteur du header */
+    justify-content: center;
 }
 
 .expertise .section-title {
@@ -616,9 +616,6 @@ header.scrolled::after {
 }
 
 @media (min-width: 768px) {
-    .expertise {
-        padding: 6rem 1.5rem;
-    }
 
     .expertise .section-title {
         padding: 0;
@@ -1283,7 +1280,7 @@ header.scrolled[data-section="contact"] {
     gap: 1.5rem;
 }
 
-/* Apple-style text reveal */
+/* Smooth-style text reveal */
 .slide-main-text {
     display: flex;
     flex-direction: column;
@@ -1395,7 +1392,7 @@ header.scrolled[data-section="contact"] {
 }
 
 /* ==========================================
-   Expertise Tiles - Apple-style Scroll Animation
+   Expertise Tiles - Smooth-style Scroll Animation
    ========================================== */
 .expertise-tiles-wrapper {
     width: 100%;
@@ -1503,14 +1500,14 @@ header.scrolled[data-section="contact"] {
    ========================================== */
 .expertise-animation {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: relative;
-    overflow: hidden;
+    /* La hauteur est maintenant gérée par le parent .expertise */
 }
 
 .expertise-phase {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1534,6 +1531,7 @@ header.scrolled[data-section="contact"] {
    Téléphone Unifié - Se déplace entre les phases
    ========================================== */
 .unified-phone {
+    width: 250px;
     position: absolute;
     z-index: 100;
     /* Position fixe au centre - on utilise transform pour tout */
@@ -1614,74 +1612,65 @@ header.scrolled[data-section="contact"] {
 }
 
 /* ==========================================
-   Phase 1: Diagramme complet
+   Phase 1: Diagramme complet - À REMPLACER PAR SVG
    ========================================== */
-.phase-1 .diagram-container {
+/* .phase-1 .diagram-container {
     position: relative;
-    width: 100%;
-    max-width: 900px;
-    height: 600px;
+    width: 90%;
+    height: 80%;
     margin: 0 auto;
 }
 
-/* Boîtes du diagramme */
 .diagram-box {
     position: absolute;
     background: #ffffff;
     border: 1px solid #a1a1a1;
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
+    border-radius: 0.42vw;
+    padding: 0.52vw 0.78vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-width: 140px;
-    box-shadow: -1px 2px 6px #0000005e;
+    min-width: 7.3vw;
+    box-shadow: -0.05vw 0.1vw 0.31vw #0000005e;
 }
 
 .box-label {
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.8vw;
     color: #000;
 }
 
 .box-sublabel {
-    font-size: 0.85rem;
+    font-size: 0.7vw;
     color: #333;
 }
 
-/* Positions des boîtes - Phase 1 (selon maquette) */
-
-/* Gestion des sessions - haut centre */
 .box-sessions {
     top: -172px;
     left: 50%;
     transform: translateX(-50%);
 }
 
-/* Requêtes à la demande - aligné avec DB à gauche */
 .box-requests {
     top: calc(35% - 167px);
     left: 50px;
     transform: translateY(-50%);
 }
 
-/* Connexion continue - aligné avec DB à droite */
 .box-connexion {
     top: calc(35% - 168px);
     right: 50px;
     transform: translateY(-50%);
 }
 
-/* LLM - sous DB, décalé vers la droite */
 .box-llm {
     top: calc(48% - 137px);
     right: 398px;
     min-width: 100px;
 }
 
-/* Utilisateur - bas centre */
 .box-user {
     bottom: 30px;
     left: 50%;
@@ -1692,7 +1681,6 @@ header.scrolled[data-section="contact"] {
     box-shadow: none;
 }
 
-/* Téléphone petit sous utilisateur */
 .phase-1 .phone-small {
     position: absolute;
     bottom: 20px;
@@ -1701,7 +1689,6 @@ header.scrolled[data-section="contact"] {
     width: 50px;
 }
 
-/* Labels de connexion */
 .connection-label {
     position: absolute;
     font-size: 0.7rem;
@@ -1730,12 +1717,12 @@ header.scrolled[data-section="contact"] {
     z-index: 2;
     background-color: white;
     font-size: 1.4rem;
-}
+} */
 
 /* ==========================================
-   Flèches CSS - Modifiables facilement
+   Flèches CSS - À REMPLACER PAR SVG
    ========================================== */
-.arrows-container {
+/* .arrows-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -1748,237 +1735,235 @@ header.scrolled[data-section="contact"] {
 .arrow {
     position: absolute;
     background: #000;
-    /* Éviter les points carrés si width/height non définis */
     width: 0;
     height: 0;
 }
 
-/* Désactiver la pointe par défaut */
 .arrow::after {
     content: '';
     position: absolute;
     width: 0;
     height: 0;
     border-style: solid;
-}
+} */
 
-/* === Sessions <-> DB (bidirectionnel vertical) === */
-.arrow-sessions-db-down {
+/* === Sessions <-> DB (bidirectionnel vertical) - À REMPLACER PAR SVG === */
+/* .arrow-sessions-db-down {
     left: 49.4%;
-    top: -94.3px;
-    width: 2px;
-    height: 82px;
+    top: -4.9%;
+    width: 0.1%;
+    height: 4.27%;
 }
 .arrow-sessions-db-down::after {
-    bottom: -8px;
-    left: -4px;
-    border-width: 8px 5px 0 5px;
+    bottom: -0.42%;
+    left: -0.21%;
+    border-width: 0.42% 0.26% 0 0.26%;
     border-color: #000 transparent transparent transparent;
 }
 
 .arrow-db-sessions-up {
     left: 50.7%;
-    top: -86px;
-    width: 2px;
-    height: 81px;
+    top: -4.48%;
+    width: 0.1%;
+    height: 4.22%;
 }
 .arrow-db-sessions-up::after {
-    top: -8px;
-    left: -4px;
-    border-width: 0 5px 8px 5px;
+    top: -0.42%;
+    left: -0.21%;
+    border-width: 0 0.26% 0.42% 0.26%;
     border-color: transparent transparent #000 transparent;
-}
+} */
 
-/* === DB -> Requêtes (horizontal gauche) === */
-.arrow-db-requests {
-    left: 197px;
+/* === DB -> Requêtes (horizontal gauche) - À REMPLACER PAR SVG === */
+/* .arrow-db-requests {
+    left: 10.26%;
     top: 9%;
-    width: 224px;
-    height: 2px;
+    width: 11.67%;
+    height: 0.1%;
 }
 .arrow-db-requests::after {
-    left: -8px;
-    top: -4px;
-    border-width: 5px 8px 5px 0;
+    left: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0.42% 0.26% 0;
     border-color: transparent #000 transparent transparent;
-}
+} */
 
-/* === DB -> Connexion (horizontal droite) === */
-.arrow-db-connexion {
-    right: 197px;
+/* === DB -> Connexion (horizontal droite) - À REMPLACER PAR SVG === */
+/* .arrow-db-connexion {
+    right: 10.26%;
     top: 9%;
-    width: 224px;
-    height: 2px;
+    width: 11.67%;
+    height: 0.1%;
 }
 .arrow-db-connexion::after {
-    right: -8px;
-    top: -4px;
-    border-width: 5px 0 5px 8px;
+    right: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0 0.26% 0.42%;
     border-color: transparent transparent transparent #000;
-}
+} */
 
-/* === Connexion -> LLM (vertical vers bas) === */
-.arrow-connexion-llm {
-    right: 290px;
+/* === Connexion -> LLM (vertical vers bas) - À REMPLACER PAR SVG === */
+/* .arrow-connexion-llm {
+    right: 15.1%;
     top: 1.8%;
-    width: 2px;
-    height: 223px;
+    width: 0.1%;
+    height: 11.61%;
     transform: rotate(65deg);
 }
 .arrow-connexion-llm::after {
-    bottom: -8px;
-    left: -4px;
-    border-width: 8px 5px 0 5px;
+    bottom: -0.42%;
+    left: -0.21%;
+    border-width: 0.42% 0.26% 0 0.26%;
     border-color: #000 transparent transparent transparent;
-}
+} */
 
-/* === CÔTÉ DROIT : trait vertical (TCP) === */
-.arrow-right-vertical {
-    right: 110px;
+/* === CÔTÉ DROIT : trait vertical (TCP) - À REMPLACER PAR SVG === */
+/* .arrow-right-vertical {
+    right: 5.73%;
     top: 13.5%;
-    width: 2px;
-    height: 382px;
+    width: 0.1%;
+    height: 19.9%;
 }
 .arrow-right-vertical::after {
-    display: none; /* Pas de pointe, juste un trait */
-}
+    display: none;
+} */
 
-/* === CÔTÉ DROIT : flèche vers utilisateur === */
-.arrow-right-to-user {
-    right: 123px;
-    top: calc(26% + 292px);
-    width: 252px;
-    height: 2px;
+/* === CÔTÉ DROIT : flèche vers utilisateur - À REMPLACER PAR SVG === */
+/* .arrow-right-to-user {
+    right: 6.41%;
+    top: calc(26% + 15.21%);
+    width: 13.13%;
+    height: 0.1%;
 }
 .arrow-right-to-user::after {
-    left: -8px;
-    top: -4px;
-    border-width: 5px 8px 5px 0;
+    left: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0.42% 0.26% 0;
     border-color: transparent #000 transparent transparent;
-}
+} */
 
-/* === CÔTÉ GAUCHE : trait vertical (AUTH) === */
-.arrow-left-vertical {
-    left: 121px;
+/* === CÔTÉ GAUCHE : trait vertical (AUTH) - À REMPLACER PAR SVG === */
+/* .arrow-left-vertical {
+    left: 6.3%;
     top: 13.5%;
-    width: 2px;
-    height: 370px;
+    width: 0.1%;
+    height: 19.27%;
 }
 .arrow-left-vertical::after {
-    display: none; /* Pas de pointe, juste un trait */
-}
+    display: none;
+} */
 
-/* === CÔTÉ GAUCHE : flèche vers Requêtes (remonte) === */
-.arrow-left-to-user {
-    left: 122px;
+/* === CÔTÉ GAUCHE : flèche vers Requêtes (remonte) - À REMPLACER PAR SVG === */
+/* .arrow-left-to-user {
+    left: 6.35%;
     top: 74.8%;
-    width: 255px;
-    height: 2px;
+    width: 13.28%;
+    height: 0.1%;
 }
 .arrow-left-to-user::after {
-    right: -8px;
-    top: -4px;
-    border-width: 5px 0 5px 8px;
+    right: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0 0.26% 0.42%;
     border-color: transparent transparent transparent #000;
-}
+} */
 
-/* === NOUVELLES FLÈCHES BIDIRECTIONNELLES === */
+/* === NOUVELLES FLÈCHES BIDIRECTIONNELLES - À REMPLACER PAR SVG === */
 
 /* Requêtes -> DB (au-dessus de db-requests, vers droite) */
-.arrow-requests-db {
-    left: 190px;
-    top: calc(9% - 12px);
-    width: 224px;
-    height: 2px;
+/* .arrow-requests-db {
+    left: 9.9%;
+    top: calc(9% - 0.63%);
+    width: 11.67%;
+    height: 0.1%;
 }
 .arrow-requests-db::after {
-    right: -8px;
-    top: -4px;
-    border-width: 5px 0 5px 8px;
+    right: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0 0.26% 0.42%;
     border-color: transparent transparent transparent #000;
-}
+} */
 
 /* Connexion -> DB (au-dessus de db-connexion, vers gauche) */
-.arrow-connexion-db {
-    right: 189px;
-    top: calc(9% - 12px);
-    width: 224px;
-    height: 2px;
+/* .arrow-connexion-db {
+    right: 9.84%;
+    top: calc(9% - 0.63%);
+    width: 11.67%;
+    height: 0.1%;
 }
 .arrow-connexion-db::after {
-    left: -8px;
-    top: -4px;
-    border-width: 5px 8px 5px 0;
+    left: -0.42%;
+    top: -0.21%;
+    border-width: 0.26% 0.42% 0.26% 0;
     border-color: transparent #000 transparent transparent;
-}
+} */
 
 /* LLM -> Connexion (en dessous de connexion-llm, vers haut droite) */
-.arrow-llm-connexion {
-    right: 290px;
-    top: calc(10.8% + -49px);
-    width: 2px;
-    height: 238px;
+/* .arrow-llm-connexion {
+    right: 15.1%;
+    top: calc(10.8% - 2.55%);
+    width: 0.1%;
+    height: 12.4%;
     transform: rotate(65deg);
 }
 .arrow-llm-connexion::after {
-    top: -8px;
-    left: -4px;
-    border-width: 0 5px 8px 5px;
+    top: -0.42%;
+    left: -0.21%;
+    border-width: 0 0.26% 0.42% 0.26%;
     border-color: transparent transparent #000 transparent;
-}
+} */
 
 /* Flèche vers le haut à droite de arrow-right-vertical */
-.arrow-right-vertical-up {
-    right: 122px;
+/* .arrow-right-vertical-up {
+    right: 6.35%;
     top: 14.8%;
-    width: 2px;
-    height: 361px;
+    width: 0.1%;
+    height: 18.8%;
 }
 .arrow-right-vertical-up::after {
-    top: -8px;
-    left: -4px;
-    border-width: 0 5px 8px 5px;
+    top: -0.42%;
+    left: -0.21%;
+    border-width: 0 0.26% 0.42% 0.26%;
     border-color: transparent transparent #000 transparent;
-}
+} */
 
 /* Flèche vers le haut à gauche de arrow-left-vertical */
-.arrow-left-vertical-up {
-    left: 109px;
+/* .arrow-left-vertical-up {
+    left: 5.68%;
     top: 15.1%;
-    width: 2px;
-    height: 373px;
+    width: 0.1%;
+    height: 19.43%;
 }
 .arrow-left-vertical-up::after {
-    top: -8px;
-    left: -4px;
-    border-width: 0 5px 8px 5px;
+    top: -0.42%;
+    left: -0.21%;
+    border-width: 0 0.26% 0.42% 0.26%;
     border-color: transparent transparent #000 transparent;
-}
+} */
 
 /* Trait en dessous de arrow-left-to-user */
-.arrow-left-to-user-line {
-    left: 109px;
-    top: calc(75% + 12px);
-    width: 275px;
-    height: 2px;
+/* .arrow-left-to-user-line {
+    left: 5.68%;
+    top: calc(75% + 0.63%);
+    width: 14.32%;
+    height: 0.1%;
 }
 .arrow-left-to-user-line::after {
     display: none;
-}
+} */
 
 /* Trait en dessous de arrow-right-to-user */
-.arrow-right-to-user-line {
-    right: 110px;
-    top: calc(42% + 197px + 12px);
-    width: 272px;
-    height: 2px;
+/* .arrow-right-to-user-line {
+    right: 5.73%;
+    top: calc(42% + 10.26% + 0.63%);
+    width: 14.17%;
+    height: 0.1%;
 }
 .arrow-right-to-user-line::after {
     display: none;
-}
+} */
 
-/* Base de données - icône CSS */
-.diagram-database {
+/* Base de données - icône CSS - À REMPLACER PAR SVG */
+/* .diagram-database {
     position: absolute;
     top: calc(35% - 160px);
     left: 50%;
@@ -1990,96 +1975,89 @@ header.scrolled[data-section="contact"] {
 }
 
 .db-icon {
-    width: 60px;
-    height: 70px;
+    width: 3.125vw;
+    height: 3.65vw;
     position: relative;
 }
 
-/* Ellipse du haut (couvercle) */
 .db-top {
-    width: 60px;
-    height: 20px;
+    width: 3.125vw;
+    height: 1.04vw;
     background: transparent;
     border-radius: 50%;
     position: absolute;
     top: 0;
-    border: 2px solid #000;
+    border: 0.1vw solid #000;
     z-index: 3;
 }
 
-/* Corps de la base de données */
 .db-body {
-    width: 60px;
-    height: 55px;
+    width: 3.125vw;
+    height: 2.86vw;
     background: transparent;
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
+    border-left: 0.1vw solid #000;
+    border-right: 0.1vw solid #000;
     position: absolute;
-    top: 10px;
+    top: 0.52vw;
     overflow: visible;
 }
 
-/* Ellipse du bas */
 .db-body::after {
     content: '';
     position: absolute;
-    bottom: -6px;
-    left: -2px;
-    width: 59px;
-    height: 14px;
-    border-bottom: 2px solid #000;
+    bottom: -0.31vw;
+    left: -0.1vw;
+    width: 3.07vw;
+    height: 0.73vw;
+    border-bottom: 0.1vw solid #000;
     border-top: #ffffff;
     border-radius: 50%;
     background: transparent;
 }
 
-/* Lignes courbées intérieures */
 .db-body::before {
     content: '';
     position: absolute;
-    top: 12px;
-    left: -2px;
-    width: 56px;
-    height: 8px;
-    border: 2px solid #000;
+    top: 0.625vw;
+    left: -0.1vw;
+    width: 2.92vw;
+    height: 0.42vw;
+    border: 0.1vw solid #000;
     border-top: none;
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
     background: transparent;
 }
 
-/* Ligne courbée supplémentaire via pseudo-element sur db-top */
 .db-top::after {
     content: '';
     position: absolute;
-    top: 32px;
-    left: -2px;
-    width: 56px;
-    height: 9px;
-    border: 2px solid #000;
+    top: 1.67vw;
+    left: -0.1vw;
+    width: 2.92vw;
+    height: 0.47vw;
+    border: 0.1vw solid #000;
     border-top: none;
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
     background: transparent;
 }
 
 .db-label {
-    font-size: 0.85rem;
+    font-size: 0.7vw;
     font-weight: 600;
     text-align: center;
     color: #000;
     line-height: 1.2;
 }
 
-/* Phase 1 : db-label positionné */
 .phase-1 .db-label {
     position: relative;
-    top: -5px;
+    top: -0.26vw;
 }
 
-/* Phase 2 : db-label positionné différemment */
 .phase-2 .db-label {
     position: relative;
-    top: -125px;
-}
+    top: -6.51vw;
+} */
 
 /* === Loader cercle (téléphone unifié) === */
 .phone-loader {
@@ -2093,9 +2071,9 @@ header.scrolled[data-section="contact"] {
 }
 
 .loader-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
+    width: 2.08vw; /* 40px */
+    height: 2.08vw; /* 40px */
+    border: 0.16vw solid rgba(0, 0, 0, 0.1); /* 3px */
     border-top-color: #615247;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -2120,16 +2098,16 @@ header.scrolled[data-section="contact"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 0.625vw; /* 12px */
 }
 
 .lupin-loading-text {
-    font-size: 5px;
+    font-size: 0.26vw; /* 5px */
     font-weight: 500;
     color: #555;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 1px solid #555;
+    border-right: 0.05vw solid #555; /* 1px */
     width: 0;
     animation:
         typing 3s steps(30, end) forwards,
@@ -2158,7 +2136,7 @@ header.scrolled[data-section="contact"] {
 }
 
 .lupin-logo {
-    width: 60px;
+    width: 3.125vw; /* 60px */
     height: auto;
     animation: fadeToWhite 5s ease-in-out infinite;
 }
@@ -2174,7 +2152,69 @@ header.scrolled[data-section="contact"] {
     }
 }
 
-/* Flèches SVG */
+/* ==========================================
+   SVG Diagrams - Phase 1 & 2
+   ========================================== */
+
+/* Phase 1 : Conteneur SVG */
+.phase-1 .diagram-container {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    margin: 0 auto;
+}
+
+.phase-1 .diagram-svg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.phase1-svg-diagram {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Phase 2 : Conteneur SVG */
+.phase-2 .diagram-container {
+    position: relative;
+    width: 90%;
+    max-width: 41.67vw; /* 800px à 1920px */
+    height: 40%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phase-2 .diagram-svg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.phase2-svg-diagram {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Flèches SVG - Classe conteneur pour SVG inline */
 .diagram-arrows {
     position: absolute;
     top: 0;
@@ -2185,48 +2225,52 @@ header.scrolled[data-section="contact"] {
     z-index: 1;
 }
 
-/* ==========================================
-   Phase 2: Diagramme simplifié
-   ========================================== */
-.phase-2 .diagram-container {
-    position: relative;
+.diagram-arrows svg {
     width: 100%;
-    max-width: 800px;
-    height: 300px;
+    height: 100%;
+}
+
+/* ==========================================
+   Phase 2: Diagramme simplifié - À REMPLACER PAR SVG
+   ========================================== */
+/* .phase-2 .diagram-container {
+    position: relative;
+    width: 90%;
+    max-width: 41.67vw;
+    height: 40%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 1.04vw;
 }
 
 .phase-2 .diagram-database {
     position: relative;
-    top: -203px;
-    left: -134px;
+    top: -10.6%;
+    left: -6.98vw;
     transform: scale(0.8);
 }
 
 .box-connectivity {
     position: relative;
     top: auto;
-    left: 131px;
+    left: 6.82vw;
     transform: scale(0.8);
 }
 
 .box-interface-right {
     position: relative;
-    top: -100px;
-    right: 135px;
+    top: -5.2%;
+    right: 7.03vw;
     transform: scale(0.8);
-}
+} */
 
-/* === PHASE 2 : Traits de connexion === */
-.phase-2 .arrows-container {
+/* === PHASE 2 : Traits de connexion - À REMPLACER PAR SVG === */
+/* .phase-2 .arrows-container {
     display: block;
 }
 
-/* Trait vertical central (DB vers téléphone) */
 .phase-2-line-vertical {
     position: absolute;
     left: 44%;
@@ -2237,7 +2281,6 @@ header.scrolled[data-section="contact"] {
     background: #000;
 }
 
-/* Trait horizontal gauche (Connectivité vers DB) */
 .phase-2-line-left {
     position: absolute;
     left: calc(50% - 109px);
@@ -2247,7 +2290,6 @@ header.scrolled[data-section="contact"] {
     background: #000;
 }
 
-/* Trait horizontal droit (DB vers Interface) */
 .phase-2-line-right {
     position: absolute;
     right: calc(50% - 108px);
@@ -2255,59 +2297,59 @@ header.scrolled[data-section="contact"] {
     width: 150px;
     height: 2px;
     background: #000;
-}
+} */
 
 /* ==========================================
    Phase 3: Téléphone + Interface LLM + Texte
    ========================================== */
 .phase-3 {
     flex-direction: column;
-    gap: 3rem;
+    gap: 1.56vw; /* 3rem ≈ 48px */
 }
 
 .phase3-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 1.56vw; /* 3rem ≈ 48px */
 }
 
-/* Texte style Apple */
-.apple-text {
+/* Texte style elegant */
+.elegant-text {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.26vw; /* 0.5rem ≈ 8px */
     position: relative;
-    top: 180px;
+    top: 9.375vw; /* 180px */
 }
 
-.apple-line {
-    font-size: 2.5rem;
+.elegant-line {
+    font-size: 2.08vw; /* 2.5rem ≈ 40px */
     font-weight: 700;
     color: #000;
     line-height: 1.2;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(1.56vw); /* 30px */
 }
 
 @media (min-width: 768px) {
-    .apple-line {
-        font-size: 3.5rem;
+    .elegant-line {
+        font-size: 2.92vw; /* 3.5rem ≈ 56px */
     }
 }
 
-/* Animation du texte Apple (sera activée par JS) */
-.apple-text.animate .apple-line {
+/* Animation du texte elegant (sera activée par JS) */
+.elegant-text.animate .elegant-line {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.apple-text.animate .line-1 {
+.elegant-text.animate .line-1 {
     transition-delay: 0.2s;
 }
 
-.apple-text.animate .line-2 {
+.elegant-text.animate .line-2 {
     transition-delay: 0.6s;
 }

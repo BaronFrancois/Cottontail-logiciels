@@ -145,117 +145,34 @@
                 <!-- Phase 1: Diagramme complet -->
                 <div class="expertise-phase phase-1 active" data-phase="1">
                     <div class="diagram-container">
-                        <!-- Boîte: Gestion des sessions (haut centre) -->
-                        <div class="diagram-box box-sessions">
-                            <span class="box-label">Gestion des</span>
-                            <span class="box-sublabel">sessions</span>
-                        </div>
-
-                        <!-- Boîte: Requêtes à la demande (milieu gauche) -->
-                        <div class="diagram-box box-requests">
-                            <span class="box-label">Requêtes à</span>
-                            <span class="box-sublabel">la demande</span>
-                        </div>
-
-                        <!-- Base de données (centre) -->
-                        <div class="diagram-database">
-                            <div class="db-icon">
-                                <div class="db-top"></div>
-                                <div class="db-body"></div>
-                            </div>
-                            <span class="db-label">Base de<br>donnée</span>
-                        </div>
-
-                        <!-- Boîte: Connexion continue (milieu droite) -->
-                        <div class="diagram-box box-connexion">
-                            <span class="box-label">Connexion</span>
-                            <span class="box-sublabel">continue</span>
-                        </div>
-
-                        <!-- Boîte: LLM (sous la DB) -->
-                        <div class="diagram-box box-llm">
-                            <span class="box-label">llm</span>
-                        </div>
-
-                        <!-- Boîte: Utilisateur (bas centre) -->
-                        <div class="diagram-box box-user">
-                            <span class="box-label">utilisateur</span>
-                        </div>
-
-                        <!-- Labels sur les connexions -->
-                        <span class="connection-label label-auth">AUTH<br>Connexion</span>
-                        <span class="connection-label label-feed">feed<br>LLM</span>
-                        <span class="connection-label label-tcp">TCP</span>
-
-                        <!-- Flèches de connexion CSS -->
-                        <div class="arrows-container">
-                            <!-- Sessions <-> DB (bidirectionnel vertical) -->
-                            <div class="arrow arrow-sessions-db-down"></div>
-                            <div class="arrow arrow-db-sessions-up"></div>
-
-                            <!-- DB <-> Requêtes (bidirectionnel horizontal) -->
-                            <div class="arrow arrow-db-requests"></div>
-                            <div class="arrow arrow-requests-db"></div>
-
-                            <!-- DB <-> Connexion (bidirectionnel horizontal) -->
-                            <div class="arrow arrow-db-connexion"></div>
-                            <div class="arrow arrow-connexion-db"></div>
-
-                            <!-- Connexion <-> LLM (bidirectionnel) -->
-                            <div class="arrow arrow-connexion-llm"></div>
-                            <div class="arrow arrow-llm-connexion"></div>
-
-                            <!-- CÔTÉ DROIT : Connexion -> Utilisateur -->
-                            <div class="arrow arrow-right-vertical"></div>
-                            <div class="arrow arrow-right-vertical-up"></div>
-                            <div class="arrow arrow-right-to-user"></div>
-                            <div class="arrow arrow-right-to-user-line"></div>
-
-                            <!-- CÔTÉ GAUCHE : Requêtes -> Utilisateur -->
-                            <div class="arrow arrow-left-vertical"></div>
-                            <div class="arrow arrow-left-vertical-up"></div>
-                            <div class="arrow arrow-left-to-user"></div>
-                            <div class="arrow arrow-left-to-user-line"></div>
+                        <!-- Conteneur SVG Phase 1 -->
+                        <div class="diagram-svg-wrapper">
+                            <img src="./images/expertise/phase1.svg"
+                                 alt="Architecture Phase 1"
+                                 class="phase1-svg-diagram">
                         </div>
                     </div>
                 </div>
 
                 <!-- Phase 2: Diagramme simplifié + téléphone qui grandit -->
                 <div class="expertise-phase phase-2" data-phase="2">
-                    <div class="diagram-container diagram-simplified">
-                        <!-- Boîte: Connectivité (gauche) -->
-                        <div class="diagram-box box-connectivity">
-                            <span class="box-label">Connectivité</span>
+                    <div class="diagram-container">
+                        <!-- Conteneur SVG Phase 2 -->
+                        <div class="diagram-svg-wrapper">
+                            <img src="./images/expertise/phase2.svg"
+                                 alt="Architecture Phase 2"
+                                 class="phase2-svg-diagram">
                         </div>
-
-                        <!-- Base de données (centre) -->
-                        <div class="diagram-database">
-                            <div class="db-icon">
-                                <div class="db-top"></div>
-                                <div class="db-body"></div>
-                            </div>
-                            <span class="db-label">Données<br>Sécurisées</span>
-                        </div>
-
-                        <!-- Boîte: Interface (droite) -->
-                        <div class="diagram-box box-interface-right">
-                            <span class="box-label">Interface</span>
-                        </div>
-
-                        <!-- Traits de connexion Phase 2 -->
-                        <div class="phase-2-line-vertical"></div>
-                        <div class="phase-2-line-left"></div>
-                        <div class="phase-2-line-right"></div>
                     </div>
                 </div>
 
-                <!-- Phase 3: Texte Apple style -->
+                <!-- Phase 3: Texte elegant style -->
                 <div class="expertise-phase phase-3" data-phase="3">
                     <div class="phase3-content">
-                        <!-- Texte Apple style -->
-                        <div class="apple-text">
-                            <p class="apple-line line-1">Vous avez une idée.</p>
-                            <p class="apple-line line-2">On s'occupe du reste.</p>
+                        <!-- Texte elegant style -->
+                        <div class="elegant-text">
+                            <p class="elegant-line line-1">Vous avez une idée.</p>
+                            <p class="elegant-line line-2">On s'occupe du reste.</p>
                         </div>
                     </div>
                 </div>
@@ -956,7 +873,7 @@
             const expertiseSection = document.getElementById('expertise');
             const expertiseAnimation = document.getElementById('expertiseAnimation');
             const phases = document.querySelectorAll('.expertise-phase');
-            const appleText = document.querySelector('.apple-text');
+            const elegantText = document.querySelector('.elegant-text');
 
             if (!expertiseSection || !phases.length) return;
 
@@ -988,13 +905,13 @@
 
                 currentPhase = phaseIndex;
 
-                // Activer l'animation du texte Apple sur la phase 3
-                if (currentPhase === 2 && appleText) {
+                // Activer l'animation du texte elegant sur la phase 3
+                if (currentPhase === 2 && elegantText) {
                     setTimeout(() => {
-                        appleText.classList.add('animate');
+                        elegantText.classList.add('animate');
                     }, 400);
-                } else if (appleText) {
-                    appleText.classList.remove('animate');
+                } else if (elegantText) {
+                    elegantText.classList.remove('animate');
                 }
 
                 // Débloquer après l'animation
