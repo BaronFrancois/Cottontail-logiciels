@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(cat:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nPhase 2: loader avec logo Lupin et icônes animées\n\n- Ajout du logo Lupin agrandi dans le loader\n- Loader 0-100% avec texte \"Votre assistant IA se charge\"\n- Message \"IA chargée\" en vert à 100%\n- Icônes \\(Interface, Connectivité, Données\\) apparaissent progressivement\n- Flèche animée sous le téléphone pour inviter à scroller\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

@@ -33,16 +33,19 @@
             <nav class="main-nav">
                 <a href="#hero" class="nav-link active" data-color="blue">Innovation</a>
                 <a href="#expertise" class="nav-link" data-color="orange">Expertise</a>
+                <a href="#perspective" class="nav-link" data-color="yellow">Perspective</a>
+                <a href="#realisations" class="nav-link" data-color="navy">Réalisations</a>
             </nav>
 
-            <!-- Mobile Navigation Cube -->
+            <!-- Navigation Cube -->
             <div class="mobile-nav-cube" id="mobileNavCube">
                 <div class="cube-container">
                     <div class="cube" id="navCube">
                         <div class="cube-face cube-face-front" data-section="hero" data-color="blue">Innovation</div>
-                        <div class="cube-face cube-face-bottom" data-section="expertise" data-color="orange">Expertise</div>
-                        <div class="cube-face cube-face-back" data-section="contact" data-color="yellow">Contact</div>
-                        <div class="cube-face cube-face-top" data-section="hero" data-color="blue">Innovation</div>
+                        <div class="cube-face cube-face-right" data-section="expertise" data-color="orange">Expertise</div>
+                        <div class="cube-face cube-face-back" data-section="perspective" data-color="yellow">Perspective</div>
+                        <div class="cube-face cube-face-left" data-section="realisations" data-color="navy">Réalisations</div>
+                        <div class="cube-face cube-face-top" data-section="contact" data-color="blue">Contact</div>
                     </div>
                 </div>
             </div>
@@ -265,7 +268,7 @@
                         <!-- Texte elegant style -->
                         <div class="elegant-text">
                             <p class="elegant-line line-1">Vous avez une idée.</p>
-                            <p class="elegant-line line-2">On s'occupe du reste.</p>
+                            <p class="elegant-line line-2">On <span class="orange">s'occupe</span> du reste.</p>
                         </div>
                     </div>
                 </div>
@@ -276,14 +279,12 @@
         <!-- Perspective -->
         <section class="perspective" id="perspective">
             <div class="container perspective-header">
-                <p class="eyebrow">Perspective</p>
-                <h2 class="section-title">Une perspective <span class="yellow">durable</span>.</h2>
+                <h2 class="section-title">Une perspective <span class="yellow">durable.</span></h2>
                 <p class="perspective-lead">Après le produit, le cap à tenir : valeur, évolutivité, partenariat.</p>
             </div>
 
             <div class="perspective-grid">
                 <div class="perspective-card">
-                    <p class="eyebrow">Rentabilité</p>
                     <h3>Une perspective rentable.</h3>
                     <p class="perspective-key">Chaque projet doit générer de la valeur.</p>
                     <ul class="perspective-points">
@@ -294,7 +295,6 @@
                 </div>
 
                 <div class="perspective-card">
-                    <p class="eyebrow">Évolutivité</p>
                     <h3>Une perspective évolutive.</h3>
                     <p class="perspective-key">Les besoins changent. Le logiciel doit suivre sans tout refaire.</p>
                     <ul class="perspective-points">
@@ -305,9 +305,8 @@
                 </div>
 
                 <div class="perspective-card">
-                    <p class="eyebrow">Partenariat</p>
                     <h3>Une perspective durable.</h3>
-                    <p class="perspective-key">Tu n’es pas un prestataire jetable.</p>
+                    <p class="perspective-key">Une relation à long terme.</p>
                     <ul class="perspective-points">
                         <li>Accompagnement dans le temps, vision commune.</li>
                         <li>Présence technique et humaine continue.</li>
@@ -320,9 +319,7 @@
         <!-- Réalisations -->
         <section class="realisations" id="realisations">
             <div class="container realisations-header">
-                <p class="eyebrow">Réalisations</p>
-                <h2 class="section-title">Quand l’approche prend forme.</h2>
-                <p class="realisations-lead">Les preuves viennent en dernier : une fois la vision comprise.</p>
+                <h2 class="section-title">Quand l’approche prend <span class="navy">forme.</span></h2>
             </div>
 
             <div class="realisations-grid">
@@ -497,14 +494,22 @@
         // Mobile Navigation Cube
         const navCube = document.getElementById('navCube');
         const cubeFaces = document.querySelectorAll('.cube-face');
-        const sectionOrder = ['hero', 'expertise', 'contact'];
+        const sectionOrder = ['hero', 'expertise', 'perspective', 'realisations', 'contact'];
         let currentCubePosition = 0;
 
         function updateCubePosition(sectionId) {
             const newPosition = sectionOrder.indexOf(sectionId);
             if (newPosition !== -1 && newPosition !== currentCubePosition) {
                 currentCubePosition = newPosition;
-                navCube.style.transform = `rotateX(${newPosition * 90}deg)`;
+                // Rotation séquentielle suivant l'ordre souhaité
+                const rotationMap = [
+                    'rotateY(0deg)',      // hero
+                    'rotateY(-90deg)',    // expertise (droite)
+                    'rotateY(-180deg)',   // perspective (arrière)
+                    'rotateY(90deg)',     // réalisations (gauche)
+                    'rotateX(90deg)'      // contact (haut)
+                ];
+                navCube.style.transform = rotationMap[newPosition] || 'rotateY(0deg)';
             }
         }
 
@@ -681,6 +686,11 @@
             let lastWheelTime = 0;
             const totalSlides = projectCards.length;
             const heroScrollOffset = 16;
+            const ANIMATION_DURATION = 300; // Durée réduite pour navigation rapide
+            const THROTTLE_DELAY = 250; // Délai réduit entre scrolls
+            let heroScrollLockY = null; // verrou de position pour éviter le scroll de page tant que slide > 0
+            let heroLockActive = false; // verrou global pour la section hero
+            let heroCooldownUntil = 0; // délai après sortie vers expertise
 
             // Système d'activation du scroll hijacking plus robuste
             let scrollHijackEnabled = false;
@@ -738,14 +748,14 @@
                     top: targetPosition,
                     behavior: 'smooth'
                 });
-                setTimeout(() => { isAnimating = false; }, 600);
+                setTimeout(() => { isAnimating = false; }, ANIMATION_DURATION);
             }
 
             // Scroll vers une slide spécifique (avec marquage animation)
             function scrollToSlide(index) {
                 isAnimating = true;
                 scrollToIndex(index);
-                setTimeout(() => { isAnimating = false; }, 600);
+                setTimeout(() => { isAnimating = false; }, ANIMATION_DURATION);
             }
 
             // Scroll direct vers la section expertise (avec offset header)
@@ -758,7 +768,7 @@
                     top: targetPosition,
                     behavior: 'smooth'
                 });
-                setTimeout(() => { isAnimating = false; }, 700);
+                setTimeout(() => { isAnimating = false; }, ANIMATION_DURATION + 100);
             }
 
             // Vérifie si on est au-dessus du hero (tout en haut de la page)
@@ -796,11 +806,30 @@
             // Gestionnaire du scroll vertical
             function handleWheelScroll(e) {
                 if (window.innerWidth < 768) return;
-                if (!isCarouselHovering) return;
-                if (!scrollHijackEnabled) return;
-                if (Math.abs(e.deltaY) < 30) return;
+                const activeSection = header?.getAttribute('data-section');
+                if (activeSection && activeSection !== 'hero') return; // ne verrouille que dans Innovation
+                if (Date.now() < heroCooldownUntil) {
+                    e.preventDefault();
+                    return;
+                }
 
                 const now = Date.now();
+                const deltaY = e.deltaY;
+                const currentSlide = getCurrentSlideIndex();
+                const heroRect = heroSection.getBoundingClientRect();
+                const heroInView = heroRect.top < window.innerHeight && heroRect.bottom > 0;
+                const lockUp = heroInView && currentSlide > 0 && deltaY < 0;
+                const lockDown = heroInView && currentSlide < totalSlides - 1 && deltaY > 0;
+
+                heroLockActive = lockUp || lockDown;
+                if (!heroLockActive) {
+                    heroScrollLockY = null;
+                }
+
+                if (Math.abs(deltaY) < 30 && !heroLockActive) return;
+
+                if (!isCarouselHovering && !heroLockActive) return;
+                if (!scrollHijackEnabled && !heroLockActive) return;
 
                 // Détection de scroll rapide répété (échappatoire utilisateur)
                 if (now - lastRapidScrollTime < 150) {
@@ -825,16 +854,18 @@
                 }
                 lastRapidScrollTime = now;
 
-                // Throttling: bloquer seulement si une animation est en cours
-                if (now - lastWheelTime < 600) {
-                    if (isAnimating) {
-                        e.preventDefault();
-                    }
+                // Throttling: bloquer strictement pendant les animations
+                if (isAnimating) {
+                    e.preventDefault();
+                    return;
+                }
+                if (now - lastWheelTime < THROTTLE_DELAY) {
+                    if (heroLockActive) e.preventDefault();
                     return;
                 }
 
                 // CAS 1: On est tout en haut et on scroll vers le bas → aller au titre
-                if (isAboveHero() && e.deltaY > 0) {
+                if (isAboveHero() && deltaY > 0) {
                     e.preventDefault();
                     lastWheelTime = now;
                     scrollToHeroTitle();
@@ -842,18 +873,37 @@
                 }
 
                 // CAS 2: On est sur le titre et on scroll vers le bas → aller à la slide 0
-                if (isHeroTitleInView() && !isCarouselInView() && e.deltaY > 0) {
+                if (isHeroTitleInView() && !isCarouselInView() && deltaY > 0) {
                     e.preventDefault();
                     lastWheelTime = now;
                     scrollToSlide(0);
                     return;
                 }
 
+                // Verrouillage forcé (slide > 0) : remonter/avancer les slides avant tout scroll natif
+                if (heroLockActive) {
+                    e.preventDefault();
+                    lastWheelTime = now;
+                    if (heroScrollLockY === null) {
+                        heroScrollLockY = window.scrollY;
+                    }
+                    // Empêcher le scroll de la page
+                    window.scrollTo({ top: heroScrollLockY, behavior: 'auto' });
+                    const targetIndex = lockUp ? currentSlide - 1 : currentSlide + 1;
+                    const clampedIndex = Math.max(0, Math.min(totalSlides - 1, targetIndex));
+                    if (clampedIndex !== currentSlide) {
+                        scrollToSlide(clampedIndex);
+                    } else if (!lockUp && currentSlide === totalSlides - 1) {
+                        // Laisser filer vers le bas après la dernière slide
+                        heroLockActive = false;
+                        heroScrollLockY = null;
+                    }
+                    return;
+                }
+
                 // CAS 3: On est sur le carousel
                 if (isCarouselInView()) {
-                    const currentSlide = getCurrentSlideIndex();
-
-                    if (e.deltaY > 0) {
+                    if (deltaY > 0) {
                         // Scroll vers le bas
                         if (currentSlide < totalSlides - 1) {
                             e.preventDefault();
@@ -863,10 +913,11 @@
                             // Dernière slide → bascule directement vers expertise
                             e.preventDefault();
                             lastWheelTime = now;
+                            heroCooldownUntil = now + 1000; // délai d'une seconde avant de rescoller vers le bas
                             scrollToExpertiseSection();
                             return;
                         }
-                    } else if (e.deltaY < 0) {
+                    } else if (deltaY < 0) {
                         // Scroll vers le haut
                         if (isAtExpertiseTop()) {
                             e.preventDefault();
@@ -954,6 +1005,22 @@
             carousel.addEventListener('scroll', updateActiveSlide);
             // Initial check with delay to ensure proper positioning
             setTimeout(updateActiveSlide, 100);
+
+            // Reset à la première slide quand on quitte le viewport du carousel
+            let carouselWasInView = false;
+            const carouselObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        carouselWasInView = true;
+                    } else if (carouselWasInView) {
+                        // On vient de sortir : revenir à la slide 0
+                        scrollToIndex(0);
+                        carouselWasInView = false;
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            carouselObserver.observe(carousel);
         })();
 
         // ==========================================
@@ -1043,6 +1110,7 @@
         (function() {
             const expertiseSection = document.getElementById('expertise');
             const expertiseAnimation = document.getElementById('expertiseAnimation');
+            const perspectiveSection = document.getElementById('perspective');
             const phases = document.querySelectorAll('.expertise-phase');
             const elegantText = document.querySelector('.elegant-text');
 
@@ -1054,9 +1122,33 @@
             let currentPhase = 0;
             let isAnimating = false;
             let isInExpertiseSection = false;
+            let wasInExpertiseSection = false;
             let lastWheelTime = 0;
             const totalPhases = phases.length;
-            const animationDuration = 800; // ms
+            const animationDuration = 400; // ms - Réduit pour navigation rapide
+            const expertiseThrottleDelay = 350; // Délai entre scrolls (augmenté pour molette)
+
+            // Protection contre le scroll rapide (molette)
+            let rapidScrollCount = 0;
+            let lastRapidScrollTime = 0;
+            let scrollLocked = false;
+
+            // Protection contre le spam scroll (changements de direction rapides)
+            let lastScrollDirection = 0; // -1 = up, 1 = down, 0 = none
+            let directionChangeCount = 0;
+            let lastDirectionChangeTime = 0;
+            const SPAM_DIRECTION_THRESHOLD = 3; // Nombre de changements de direction avant lock
+            const SPAM_TIME_WINDOW = 800; // Fenêtre de temps pour détecter le spam (ms)
+            const SPAM_LOCK_DURATION = 1000; // Durée du verrouillage après spam (ms)
+            let spamLocked = false;
+            let spamLockTimer = null;
+
+            // Système d'accumulation pour différencier molette/trackpad
+            let accumulatedDelta = 0;
+            let lastDeltaTime = 0;
+            const WHEEL_THRESHOLD = 80; // Seuil plus élevé pour la molette
+            const TRACKPAD_THRESHOLD = 40; // Seuil pour trackpad
+            const DELTA_RESET_TIME = 150; // Reset l'accumulation après ce délai
 
             // Variables pour le loader phase 2
             let loaderInterval = null;
@@ -1070,11 +1162,25 @@
             // Initialiser la première phase comme active
             phases[0].classList.add('active');
 
+            // Flag pour éviter les lancements multiples du loader
+            let loaderRunning = false;
+            let loaderProgress = 0;
+
             // Fonction pour animer le loader de 0% à 100%
             function animateLoader() {
                 if (!loaderElement) return;
 
-                let progress = 0;
+                // Éviter les lancements multiples
+                if (loaderRunning) return;
+
+                // Arrêter tout intervalle existant
+                if (loaderInterval) {
+                    clearInterval(loaderInterval);
+                    loaderInterval = null;
+                }
+
+                loaderRunning = true;
+                loaderProgress = 0;
                 const duration = 2000; // 2 secondes
                 const steps = 100;
                 const stepDuration = duration / steps;
@@ -1082,23 +1188,34 @@
                 loaderElement.textContent = '0%';
 
                 loaderInterval = setInterval(() => {
-                    progress++;
-                    loaderElement.textContent = progress + '%';
+                    // Protection: ne jamais dépasser 100
+                    if (loaderProgress >= 100) {
+                        clearInterval(loaderInterval);
+                        loaderInterval = null;
+                        loaderRunning = false;
+                        return;
+                    }
+
+                    loaderProgress++;
+                    // Double protection: forcer le max à 100
+                    const displayProgress = Math.min(loaderProgress, 100);
+                    loaderElement.textContent = displayProgress + '%';
 
                     // Apparition des icônes dans l'ordre (avant 100%)
-                    if (progress >= 25 && iconInterface) {
+                    if (displayProgress >= 25 && iconInterface) {
                         iconInterface.classList.add('visible');
                     }
-                    if (progress >= 50 && iconConnectivity) {
+                    if (displayProgress >= 50 && iconConnectivity) {
                         iconConnectivity.classList.add('visible');
                     }
-                    if (progress >= 75 && iconData) {
+                    if (displayProgress >= 75 && iconData) {
                         iconData.classList.add('visible');
                     }
 
-                    if (progress >= 100) {
+                    if (displayProgress >= 100) {
                         clearInterval(loaderInterval);
                         loaderInterval = null;
+                        loaderRunning = false;
 
                         // Changer le texte à 100%
                         if (loaderText) {
@@ -1118,10 +1235,15 @@
 
             // Fonction pour arrêter le loader et cacher la flèche
             function stopLoader() {
+                // Arrêter l'intervalle
                 if (loaderInterval) {
                     clearInterval(loaderInterval);
                     loaderInterval = null;
                 }
+                // Réinitialiser les flags
+                loaderRunning = false;
+                loaderProgress = 0;
+                // Réinitialiser l'affichage
                 if (loaderElement) {
                     loaderElement.textContent = '0%';
                 }
@@ -1138,6 +1260,57 @@
                 if (iconData) iconData.classList.remove('visible');
             }
 
+            // Variable pour le pinning
+            let isPinned = false;
+            let pinnedScrollPosition = 0;
+
+            // Calculer la position idéale de pinning (section centrée/visible)
+            function calculatePinPosition() {
+                const headerHeight = header?.offsetHeight || 72;
+                // Position où le haut de la section expertise est juste sous le header
+                return expertiseSection.offsetTop - headerHeight;
+            }
+
+            // Fonction pour activer le pinning
+            function enablePinning() {
+                if (isPinned) return;
+                isPinned = true;
+
+                // Calculer la position idéale pour la section
+                const idealPosition = calculatePinPosition();
+                const currentScroll = window.scrollY;
+
+                // Si on est trop loin de la position idéale, y aller
+                if (Math.abs(currentScroll - idealPosition) > 100) {
+                    window.scrollTo({
+                        top: idealPosition,
+                        behavior: 'instant'
+                    });
+                    pinnedScrollPosition = idealPosition;
+                } else {
+                    pinnedScrollPosition = currentScroll;
+                }
+
+                expertiseSection.classList.add('scroll-pinned');
+            }
+
+            // Fonction pour désactiver le pinning
+            function disablePinning() {
+                if (!isPinned) return;
+                isPinned = false;
+                expertiseSection.classList.remove('scroll-pinned');
+            }
+
+            // Forcer le scroll à rester en place quand piégé
+            function enforcePin() {
+                if (isPinned && Math.abs(window.scrollY - pinnedScrollPosition) > 5) {
+                    window.scrollTo({
+                        top: pinnedScrollPosition,
+                        behavior: 'instant'
+                    });
+                }
+            }
+
             // Fonction pour changer de phase
             function goToPhase(phaseIndex) {
                 if (phaseIndex < 0 || phaseIndex >= totalPhases) return;
@@ -1148,6 +1321,14 @@
                 // Arrêter le loader si on quitte la phase 2
                 if (currentPhase === 1) {
                     stopLoader();
+                }
+
+                // Activer le pinning si on est au milieu des phases
+                if (phaseIndex > 0 && phaseIndex < totalPhases - 1) {
+                    enablePinning();
+                } else {
+                    // Désactiver le pinning si on est à la première ou dernière phase
+                    disablePinning();
                 }
 
                 // Retirer active de la phase actuelle
@@ -1187,8 +1368,11 @@
             function isExpertiseInView() {
                 const rect = expertiseTrigger.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
-                // La section est "in view" si elle occupe la majorité du viewport
-                return rect.top <= 100 && rect.bottom >= viewportHeight - 100;
+                // La section est "in view" si elle occupe une partie significative du viewport
+                // OU si on est juste au-dessus/en-dessous (pour capturer les transitions)
+                const visibleFromTop = rect.top <= 100 && rect.bottom >= viewportHeight * 0.3;
+                const visibleFromBottom = rect.bottom >= viewportHeight - 100 && rect.top <= viewportHeight * 0.7;
+                return visibleFromTop || visibleFromBottom;
             }
 
             // Vérifier si on est au début de la section (pour sortir vers le haut)
@@ -1203,36 +1387,186 @@
                 return rect.bottom <= window.innerHeight + 50 && rect.bottom >= window.innerHeight - 100;
             }
 
+            // Vérifier si on entre dans la section par le bas (en remontant)
+            function isEnteringFromBottom() {
+                const rect = expertiseTrigger.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                // Le bas de la section est visible mais le haut est au-dessus du viewport
+                return rect.bottom >= viewportHeight * 0.5 && rect.bottom <= viewportHeight + 50 && rect.top < 0;
+            }
+
+            // Vérifier si on est dans la section perspective (pour anticiper le scroll up)
+            function isInPerspectiveSection() {
+                if (!perspectiveSection) return false;
+                const rect = perspectiveSection.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                // On est dans perspective si le haut de la section est visible
+                return rect.top <= viewportHeight * 0.5 && rect.bottom >= 0;
+            }
+
+            // Vérifier si on est au tout début de perspective (zone de transition)
+            function isAtPerspectiveTop() {
+                if (!perspectiveSection) return false;
+                const rect = perspectiveSection.getBoundingClientRect();
+                // Zone de transition: le haut de perspective est proche du haut du viewport
+                return rect.top >= -100 && rect.top <= 200;
+            }
+
+            // Détecter si c'est un scroll molette (deltaY élevé par événement)
+            function isWheelScroll(deltaY) {
+                // La molette génère typiquement des deltas de 100+ par cran
+                // Le trackpad génère des deltas plus petits et fréquents
+                return Math.abs(deltaY) >= 50;
+            }
+
             // Gestionnaire du scroll
             function handleWheel(e) {
                 const now = Date.now();
+                const deltaY = e.deltaY;
 
-                // Throttling
-                if (now - lastWheelTime < 100) return;
-                lastWheelTime = now;
+                // Reset l'accumulation si trop de temps s'est écoulé
+                if (now - lastDeltaTime > DELTA_RESET_TIME) {
+                    accumulatedDelta = 0;
+                }
+                lastDeltaTime = now;
+
+                // Accumuler le delta
+                accumulatedDelta += deltaY;
+
+                // Déterminer le seuil selon le type de scroll
+                const isWheel = isWheelScroll(deltaY);
+                const threshold = isWheel ? WHEEL_THRESHOLD : TRACKPAD_THRESHOLD;
 
                 // Vérifier si on est dans la section expertise
-                if (!isExpertiseInView()) {
+                const inView = isExpertiseInView();
+
+                // CAS SPÉCIAL: On est dans Perspective et on scroll up → préparer phase 1 (début)
+                if (!inView && isAtPerspectiveTop() && deltaY < 0) {
+                    // Préparer expertise à la première phase pour que l'animation recommence
+                    if (currentPhase !== 0) {
+                        currentPhase = 0;
+                        phases.forEach((p, i) => p.classList.toggle('active', i === 0));
+                        expertiseAnimation.setAttribute('data-current-phase', '1');
+                        stopLoader();
+                        disablePinning();
+                        if (elegantText) elegantText.classList.remove('animate');
+                    }
+                    return; // Laisser le scroll naturel
+                }
+
+                // CAS SPÉCIAL: On entre par le bas (remontée) → ne plus capturer, laisser l'entrée se faire
+                const enteringFromBottom = isEnteringFromBottom();
+
+                if (!inView && !enteringFromBottom) {
+                    wasInExpertiseSection = isInExpertiseSection;
                     isInExpertiseSection = false;
                     return;
                 }
 
                 isInExpertiseSection = true;
 
-                // Si une animation est en cours, bloquer le scroll
+                // Protection contre scroll rapide
+                if (scrollLocked) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Protection contre le spam (changements de direction rapides)
+                if (spamLocked) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Détection de spam: surveiller les changements de direction
+                const currentDirection = deltaY > 0 ? 1 : (deltaY < 0 ? -1 : 0);
+                if (currentDirection !== 0 && lastScrollDirection !== 0 && currentDirection !== lastScrollDirection) {
+                    // Changement de direction détecté
+                    if (now - lastDirectionChangeTime < SPAM_TIME_WINDOW) {
+                        directionChangeCount++;
+                        if (directionChangeCount >= SPAM_DIRECTION_THRESHOLD) {
+                            // Spam détecté! Verrouiller temporairement
+                            spamLocked = true;
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            // Réinitialiser après le délai
+                            if (spamLockTimer) clearTimeout(spamLockTimer);
+                            spamLockTimer = setTimeout(() => {
+                                spamLocked = false;
+                                directionChangeCount = 0;
+                                accumulatedDelta = 0;
+                                spamLockTimer = null;
+                            }, SPAM_LOCK_DURATION);
+                            return;
+                        }
+                    } else {
+                        // Hors fenêtre de temps, reset le compteur
+                        directionChangeCount = 1;
+                    }
+                    lastDirectionChangeTime = now;
+                }
+                if (currentDirection !== 0) {
+                    lastScrollDirection = currentDirection;
+                }
+
+                // Si une animation est en cours, bloquer strictement le scroll
                 if (isAnimating) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Détection de scroll rapide (molette)
+                if (isWheel && now - lastRapidScrollTime < 80) {
+                    rapidScrollCount++;
+                    if (rapidScrollCount > 3) {
+                        // Verrouiller temporairement pour éviter les sauts multiples
+                        scrollLocked = true;
+                        e.preventDefault();
+                        setTimeout(() => {
+                            scrollLocked = false;
+                            rapidScrollCount = 0;
+                            accumulatedDelta = 0;
+                        }, 600);
+                        return;
+                    }
+                } else if (!isWheel) {
+                    rapidScrollCount = 0;
+                }
+                lastRapidScrollTime = now;
+
+                // Throttling plus strict pour la molette
+                const currentThrottleDelay = isWheel ? expertiseThrottleDelay + 100 : expertiseThrottleDelay;
+                if (now - lastWheelTime < currentThrottleDelay) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                const scrollingDown = deltaY > 0;
+                const scrollingUp = deltaY < 0;
+
+                // Ignorer les petits mouvements de scroll (seuil adaptatif)
+                if (Math.abs(accumulatedDelta) < threshold) {
                     e.preventDefault();
                     return;
                 }
 
-                const deltaY = e.deltaY;
-                const scrollingDown = deltaY > 0;
-                const scrollingUp = deltaY < 0;
+                // Bloquer le scroll si on est piégé au milieu des phases
+                if (isPinned) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
 
                 // Scroll vers le bas
                 if (scrollingDown) {
                     if (currentPhase < totalPhases - 1) {
                         e.preventDefault();
+                        e.stopPropagation();
+                        lastWheelTime = now;
+                        accumulatedDelta = 0; // Reset après action
                         goToPhase(currentPhase + 1);
                     }
                     // Si on est à la dernière phase, laisser le scroll naturel continuer
@@ -1240,8 +1574,18 @@
 
                 // Scroll vers le haut
                 if (scrollingUp) {
-                    if (currentPhase > 0) {
+                    if (currentPhase > 1) {
+                        // Ne pas bloquer le scroll pour 2 → 1, juste animer
+                        lastWheelTime = now;
+                        accumulatedDelta = 0;
+                        goToPhase(currentPhase - 1);
+                        return;
+                    }
+                    if (currentPhase === 1) {
                         e.preventDefault();
+                        e.stopPropagation();
+                        lastWheelTime = now;
+                        accumulatedDelta = 0; // Reset après action
                         goToPhase(currentPhase - 1);
                     }
                     // Si on est à la première phase, laisser le scroll naturel continuer
@@ -1251,20 +1595,160 @@
             // Écouter le scroll
             window.addEventListener('wheel', handleWheel, { passive: false });
 
-            // Réinitialiser quand on entre dans la section
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        // Reset à la phase 1 quand on entre par le haut
-                        const rect = expertiseTrigger.getBoundingClientRect();
-                        if (rect.top > 0) {
-                            goToPhase(0);
-                        }
-                    }
-                });
-            }, { threshold: [0.5] });
+            // Si le verrou hero est actif, empêcher tout scroll natif (ex: inertie)
+            window.addEventListener('scroll', () => {
+                if (heroLockActive && heroScrollLockY !== null) {
+                    window.scrollTo({ top: heroScrollLockY, behavior: 'auto' });
+                }
+            }, { passive: true });
 
-            observer.observe(expertiseTrigger);
+            // Système de détection d'entrée dans la section
+            let lastScrollY = window.scrollY;
+            let hasEnteredFromBottom = false;
+            let hasEnteredFromTop = false;
+
+            // Détection d'entrée basée sur la position de scroll
+            function checkSectionEntry() {
+                const rect = expertiseTrigger.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const currentScrollY = window.scrollY;
+                const scrollingDown = currentScrollY > lastScrollY;
+                const scrollingUp = currentScrollY < lastScrollY;
+
+                // Détecter si on vient d'entrer dans la section
+                const sectionTop = expertiseSection.offsetTop;
+                const sectionBottom = sectionTop + expertiseSection.offsetHeight;
+                const viewportTop = currentScrollY;
+                const viewportBottom = currentScrollY + viewportHeight;
+
+                // Zone d'entrée par le haut (on arrive depuis le hero)
+                const enteringFromTop = rect.top <= viewportHeight * 0.3 && rect.top >= -100 && scrollingDown;
+
+                // Zone d'entrée par le bas (on remonte depuis perspective) - ÉLARGIE
+                const enteringFromBottom = rect.bottom >= viewportHeight * 0.5 && rect.bottom <= viewportHeight + 200 && scrollingUp;
+
+                // Vérifier si on est dans la zone de transition perspective → expertise
+                const perspectiveRect = perspectiveSection?.getBoundingClientRect();
+                const comingFromPerspective = perspectiveRect && perspectiveRect.top >= -50 && perspectiveRect.top <= viewportHeight * 0.3 && scrollingUp;
+
+                // Entrée par le haut → phase 0
+                if (enteringFromTop && !hasEnteredFromTop && !isInExpertiseSection) {
+                    hasEnteredFromTop = true;
+                    hasEnteredFromBottom = false;
+                    if (currentPhase !== 0 && !isAnimating) {
+                        // Forcer la phase 0 sans animation
+                        currentPhase = 0;
+                        phases.forEach((p, i) => p.classList.toggle('active', i === 0));
+                        expertiseAnimation.setAttribute('data-current-phase', '1');
+                        stopLoader();
+                        if (elegantText) elegantText.classList.remove('animate');
+                    }
+                }
+
+                // Entrée par le bas → phase 1 (début) pour que l'animation recommence
+                if ((enteringFromBottom || comingFromPerspective) && !hasEnteredFromBottom && !isInExpertiseSection) {
+                    hasEnteredFromBottom = true;
+                    hasEnteredFromTop = false;
+                    if (currentPhase !== 0 && !isAnimating) {
+                        // Forcer la première phase pour recommencer l'animation
+                        currentPhase = 0;
+                        phases.forEach((p, i) => p.classList.toggle('active', i === 0));
+                        expertiseAnimation.setAttribute('data-current-phase', '1');
+                        stopLoader();
+                        disablePinning();
+                        if (elegantText) elegantText.classList.remove('animate');
+                    }
+                }
+
+                // Anticipation: même si on n'est pas encore dans expertise, préparer la phase 1 si on scroll up depuis perspective
+                if (comingFromPerspective && currentPhase !== 0 && !isAnimating) {
+                    currentPhase = 0;
+                    phases.forEach((p, i) => p.classList.toggle('active', i === 0));
+                    expertiseAnimation.setAttribute('data-current-phase', '1');
+                    stopLoader();
+                    disablePinning();
+                    if (elegantText) elegantText.classList.remove('animate');
+                }
+
+                // Reset des flags quand on sort de la section
+                if (rect.bottom < 0 || rect.top > viewportHeight) {
+                    hasEnteredFromTop = false;
+                    hasEnteredFromBottom = false;
+                    // Désactiver le pinning si on sort complètement
+                    disablePinning();
+                }
+
+                lastScrollY = currentScrollY;
+            }
+
+            window.addEventListener('scroll', checkSectionEntry, { passive: true });
+
+            // Écouteur pour enforcer le pinning (scroll natif, barre de scroll)
+            window.addEventListener('scroll', () => {
+                if (isPinned) {
+                    enforcePin();
+                }
+            }, { passive: true });
+
+            // Bloquer le scroll tactile quand on est piégé
+            expertiseSection.addEventListener('touchmove', (e) => {
+                if (isPinned) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        })();
+
+        // ==========================================
+        // Snap anchors when hovering boundaries (hero / expertise / perspective)
+        // ==========================================
+        (function() {
+            const heroSection = document.getElementById('hero');
+            const expertiseSection = document.getElementById('expertise');
+            const perspectiveSection = document.getElementById('perspective');
+            if (!heroSection || !expertiseSection || !perspectiveSection) return;
+
+            let snapping = false;
+            const snapDuration = 800;
+
+            const getHeaderHeight = () => header?.offsetHeight || 0;
+
+            function scrollToAnchor(section) {
+                snapping = true;
+                const target = section.offsetTop - getHeaderHeight();
+                window.scrollTo({ top: target, behavior: 'smooth' });
+                setTimeout(() => { snapping = false; }, snapDuration);
+            }
+
+            window.addEventListener('wheel', (e) => {
+                if (snapping) {
+                    e.preventDefault();
+                    return;
+                }
+
+                const deltaY = e.deltaY;
+                const viewportHeight = window.innerHeight;
+                const expertiseRect = expertiseSection.getBoundingClientRect();
+                const perspectiveRect = perspectiveSection.getBoundingClientRect();
+                const heroRect = heroSection.getBoundingClientRect();
+
+                // Remontée uniquement : si on voit le bas d'expertise et le haut de perspective, recale sur expertise
+                const expertiseBottomVisible = expertiseRect.bottom > 0 && expertiseRect.bottom < viewportHeight * 0.55;
+                const perspectiveTopVisible = perspectiveRect.top < viewportHeight * 0.45;
+                if (deltaY < 0 && expertiseBottomVisible && perspectiveTopVisible) {
+                    e.preventDefault();
+                    scrollToAnchor(expertiseSection);
+                    return;
+                }
+
+                // Remontée : si on remonte vers le hero et qu'il est partiellement visible, recale sur hero (innovation)
+                const heroTopNear = heroRect.top < viewportHeight * 0.3;
+                const heroBottomVisible = heroRect.bottom > viewportHeight * 0.2;
+                if (deltaY < 0 && heroTopNear && heroBottomVisible) {
+                    e.preventDefault();
+                    scrollToAnchor(heroSection);
+                    return;
+                }
+            }, { passive: false });
         })();
 
     </script>
