@@ -46,7 +46,6 @@ body {
 }
 /* Utilities */
 .container {
-    max-width: 1280px;
     margin: 0 auto;
     padding: 0;
 }
@@ -62,7 +61,7 @@ button {
 header {
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 1000;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -89,10 +88,10 @@ header {
 
 header.scrolled {
     outline: 1px solid var(--header-outline-color, rgba(0, 0, 0, 0.2));
-    top:5px;
-    border-radius: 25px;
+    top: 5px;
+    border-radius: 0;
     box-shadow: 0 2px 10px #0000002e;
-    width: 95%;
+    width: 100%;
     margin: auto;
 }
 
@@ -334,6 +333,7 @@ header.scrolled::after {
     align-items: center;
     overflow: hidden;
     z-index: 1;
+    left: -6px;
 }
 
 /* Gradient background layer */
@@ -823,6 +823,149 @@ header.scrolled::after {
     color: var(--color-text-secondary);
 }
 
+/* Perspective Section */
+.perspective {
+    background-color: #ffffff;
+    padding: 6rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.perspective-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 3rem;
+}
+
+.perspective-lead {
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.perspective-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+    .perspective-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .perspective-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.perspective-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    box-shadow: 0 20px 40px -25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.perspective-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.perspective-key {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.perspective-points {
+    padding-left: 1.25rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.perspective-body {
+    color: var(--color-text-main);
+    font-weight: 500;
+}
+
+/* Réalisations Section */
+.realisations {
+    padding: 6rem 1.5rem;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+}
+
+.realisations-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 3rem;
+}
+
+.realisations-lead {
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+}
+
+.realisations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+    .realisations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .realisations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.realisation-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    box-shadow: 0 16px 32px -24px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.realisation-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.realisation-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 1.1rem;
+    color: var(--color-text-secondary);
+}
+
 /* Contact Section - Bento Style */
 .contact {
     padding: 6rem 1.5rem;
@@ -954,6 +1097,93 @@ header.scrolled::after {
     justify-content: center;
     margin-bottom: 1rem;
     flex-shrink: 0;
+}
+.data-flow-animation {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 180px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.data-flow-animation {
+    position: relative;
+    top: -18px;
+    left: -0.7px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 170px;
+    height: 137px;
+    margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+    .data-flow-animation {
+        width: 140px;
+        height: 240px;
+    }
+}
+
+svg.flow-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+}
+
+.flow-path {
+    fill: none;
+    stroke: #0f172a;
+    stroke-width: 0.8;
+    stroke-dasharray: 2 4;
+    opacity: 0.25;
+}
+
+.flow-origin {
+    fill: #0f172a;
+    opacity: 0.85;
+}
+
+.flow-particle {
+    fill: #0f172a;
+    opacity: 0.95;
+}
+
+.flow-node.node-user {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+.material-symbols-outlined
+ {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    border: solid 1px #00000000;
+    border-radius: 25px;
+    box-shadow: 0 2px 2px #0000004f;
 }
 
 .bento-icon .material-symbols-outlined {
@@ -1161,21 +1391,21 @@ footer {
 /* Header color variations - only when scrolled */
 header.scrolled[data-section="hero"] {
     --header-border-color: rgba(37, 99, 235, 0.7);
-    --header-outline-color: rgba(37, 99, 235, 0.2);
+    --header-outline-color: rgba(37, 100, 235, 0);
     background: rgba(37, 100, 235, 0.041);
 }
 
 
 header.scrolled[data-section="expertise"] {
-    --header-border-color: rgba(249, 115, 22, 0.7);
-    --header-outline-color: rgba(249, 115, 22, 0.2);
-    background: rgb(249 116 22 / 3%);
+    --header-border-color: rgba(249, 116, 22, 0);
+    --header-outline-color: rgba(249, 116, 22, 0);
+    background: rgba(249, 116, 22, 0);
 }
 
 
 header.scrolled[data-section="vision"] {
-    --header-border-color: rgba(234, 179, 8, 0.7);
-    --header-outline-color: rgba(234, 179, 8, 0.2);
+    --header-border-color: rgba(234, 178, 8, 0);
+    --header-outline-color: rgba(234, 178, 8, 0);
     background: rgb(234 179 8 / 2%);
 }
 
@@ -1191,7 +1421,7 @@ header[data-section="contact"] .nav-link.active {
 
 
 header.scrolled[data-section="contact"] {
-    --header-outline-color: rgba(0, 0, 0, 0.1);
+    --header-outline-color: rgba(0, 0, 0, 0);
     background: rgba(255, 255, 255, 0);
     backdrop-filter: blur(20px);
 }
@@ -1505,6 +1735,11 @@ header.scrolled[data-section="contact"] {
     /* La hauteur est maintenant gérée par le parent .expertise */
 }
 
+.expertise-phase.phase-3.active{
+    position: relative;
+    top: 170px;
+}
+
 .expertise-phase {
     width: 100%;
     height: 100%;
@@ -1531,7 +1766,7 @@ header.scrolled[data-section="contact"] {
    Téléphone Unifié - Se déplace entre les phases
    ========================================== */
 .unified-phone {
-    width: 250px;
+    width: 690px;
     position: absolute;
     z-index: 100;
     /* Position fixe au centre - on utilise transform pour tout */
@@ -1584,13 +1819,13 @@ header.scrolled[data-section="contact"] {
 
 [data-current-phase="2"] .unified-phone .content-phase-2 {
     opacity: 1;
-    transform: translate(-50%, -64%) scale(4.45);
+    transform: translate(-50%, -50%) scale(2.5);
 }
 
 /* === Position Phase 3: Grand, centré === */
 [data-current-phase="3"] .unified-phone {
     /* Centré, encore plus grand */
-    transform: translate(-50%, -70%) scale(1.8);
+    transform: translate(-50%, -65%) scale(1.8);
 }
 
 [data-current-phase="3"] .unified-phone .content-phase-3 {
@@ -2197,8 +2432,8 @@ header.scrolled[data-section="contact"] {
 
 .phase-2 .diagram-svg-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -22%;
+    left: -0.3%;
     width: 100%;
     height: 100%;
     display: flex;
@@ -2352,4 +2587,160 @@ header.scrolled[data-section="contact"] {
 
 .elegant-text.animate .line-2 {
     transition-delay: 0.6s;
+}
+
+/* ==========================================
+   Phase 2: Loader pourcentage + Icônes animées
+   ========================================== */
+
+/* Loader pourcentage dans le téléphone */
+.phase2-loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3vw;
+    width: 100%;
+    height: 100%;
+}
+
+.loader-logo {
+    width: 2.7vw;
+    height: auto;
+}
+
+.loader-percentage {
+    font-size: 0.5vw;
+    font-weight: 600;
+    color: #555;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+}
+
+.loader-text {
+    font-size: 0.20vw;
+    font-weight: 500;
+    color: #888;
+    font-family: var(--font-display);
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.loader-text.loaded {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+/* Flèche invitant à scroller - sous le téléphone */
+.scroll-arrow {
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 101;
+}
+
+.scroll-arrow.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-arrow .material-symbols-outlined {
+    font-size: 2rem;
+    color: #000;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    animation: bounceArrow 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* Conteneur des icônes - positionné au centre du téléphone */
+.phase2-icons-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Icônes de base - cachées au centre, derrière le téléphone */
+.phase2-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    z-index: 50;
+    transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.phase2-icon .material-symbols-outlined {
+    font-size: 2rem;
+    color: #2563eb;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.phase2-icon .icon-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #000;
+    white-space: nowrap;
+}
+
+/* Positions finales des icônes - contrôlées par JS via classes */
+
+/* Interface - haut gauche */
+.icon-interface.visible {
+    opacity: 1;
+    transform: translate(-229%, -180%) scale(1);
+}
+
+/* Connectivité - bas droit */
+.icon-connectivity.visible {
+    opacity: 1;
+    transform: translate(100%, -40%) scale(1);
+}
+
+/* Données sécurisées - bas gauche */
+.icon-data.visible {
+    opacity: 1;
+    transform: translate(-180%, 70%) scale(1);
+}
+
+/* Couleurs spécifiques pour chaque icône */
+.icon-interface .material-symbols-outlined {
+    color: #2563eb !important;
+}
+
+.icon-connectivity .material-symbols-outlined {
+    color: #f97316 !important;
+}
+
+.icon-data .material-symbols-outlined {
+    color: #22c55e !important;
 }

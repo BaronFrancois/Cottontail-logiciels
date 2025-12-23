@@ -33,7 +33,6 @@
             <nav class="main-nav">
                 <a href="#hero" class="nav-link active" data-color="blue">Innovation</a>
                 <a href="#expertise" class="nav-link" data-color="orange">Expertise</a>
-                <a href="#vision" class="nav-link" data-color="yellow">Vision</a>
             </nav>
 
             <!-- Mobile Navigation Cube -->
@@ -42,7 +41,7 @@
                     <div class="cube" id="navCube">
                         <div class="cube-face cube-face-front" data-section="hero" data-color="blue">Innovation</div>
                         <div class="cube-face cube-face-bottom" data-section="expertise" data-color="orange">Expertise</div>
-                        <div class="cube-face cube-face-back" data-section="vision" data-color="yellow">Vision</div>
+                        <div class="cube-face cube-face-back" data-section="contact" data-color="yellow">Contact</div>
                         <div class="cube-face cube-face-top" data-section="hero" data-color="blue">Innovation</div>
                     </div>
                 </div>
@@ -121,20 +120,107 @@
                 <div class="unified-phone" id="unifiedPhone">
                     <img src="./images/expertise/blank-phone.png" alt="Phone" class="phone-image">
 
-                    <!-- Contenu Phase 1: Loader -->
+                    <!-- Contenu Phase 1: Animation flux de données -->
                     <div class="phone-content content-phase-1">
-                        <div class="phone-loader">
-                            <div class="loader-spinner"></div>
+                        <div class="data-flow-animation">
+                            <!-- Noeuds du schéma -->
+                            <div class="flow-node node-user">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
+                            <!-- <div class="flow-node node-db">
+                                <span class="material-symbols-outlined">database</span>
+                            </div>
+                            <div class="flow-node node-api">
+                                <span class="material-symbols-outlined">api</span>
+                            </div> -->
+                            <!-- <div class="flow-node node-llm">
+                                <span class="material-symbols-outlined">psychology</span>
+                            </div> -->
+
+                            <!-- Lignes de connexion avec particules -->
+                            <svg class="flow-lines" viewBox="0 0 120 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                                <defs>
+                                    <!-- Trajectoires principales -->
+                                    <path id="flow-left-to-user" d="M18 178 C30 150 44 105 60 58" />
+                                    <path id="flow-right-to-user" d="M102 178 C90 150 76 105 60 58" />
+                                    <path id="flow-left-to-right" d="M18 178 Q60 198 102 178" />
+                                    <path id="flow-right-to-left" d="M102 178 Q60 198 18 178" />
+                                </defs>
+
+                                <g class="flow-guides">
+                                    <use href="#flow-left-to-user" class="flow-path" />
+                                    <use href="#flow-right-to-user" class="flow-path" />
+                                    <use href="#flow-left-to-right" class="flow-path" />
+                                    <use href="#flow-right-to-left" class="flow-path" />
+                                </g>
+
+                                <g class="flow-origins">
+                                    <circle class="flow-origin" cx="18" cy="178" r="2" />
+                                    <circle class="flow-origin" cx="102" cy="178" r="2" />
+                                </g>
+
+                                <g class="flow-particles">
+                                    <!-- Particules qui remontent vers l'utilisateur -->
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.8s" repeatCount="indefinite" keyTimes="0;0.75;1" keyPoints="0;1;1" calcMode="linear">
+                                            <mpath href="#flow-left-to-user" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="3.2s" begin="-1.4s" repeatCount="indefinite" keyTimes="0;0.7;1" keyPoints="0;1;1" calcMode="linear">
+                                            <mpath href="#flow-right-to-user" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.6s" begin="-0.8s" repeatCount="indefinite" keyTimes="0;0.8;1" keyPoints="0;1;1" calcMode="linear">
+                                            <mpath href="#flow-left-to-user" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="3s" begin="-0.5s" repeatCount="indefinite" keyTimes="0;0.78;1" keyPoints="0;1;1" calcMode="linear">
+                                            <mpath href="#flow-right-to-user" />
+                                        </animateMotion>
+                                    </circle>
+
+                                    <!-- Particules qui traversent A ↔ B -->
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.4s" repeatCount="indefinite" keyTimes="0;0.5;1" keyPoints="0;1;0" calcMode="linear">
+                                            <mpath href="#flow-left-to-right" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.7s" begin="-1.1s" repeatCount="indefinite" keyTimes="0;0.5;1" keyPoints="0;1;0" calcMode="linear">
+                                            <mpath href="#flow-right-to-left" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.9s" begin="-0.6s" repeatCount="indefinite" keyTimes="0;0.5;1" keyPoints="0;1;0" calcMode="linear">
+                                            <mpath href="#flow-left-to-right" />
+                                        </animateMotion>
+                                    </circle>
+                                    <circle class="flow-particle" r="1.6">
+                                        <animateMotion dur="2.5s" begin="-0.3s" repeatCount="indefinite" keyTimes="0;0.5;1" keyPoints="0;1;0" calcMode="linear">
+                                            <mpath href="#flow-right-to-left" />
+                                        </animateMotion>
+                                    </circle>
+                                </g>
+                            </svg>
                         </div>
                     </div>
 
-                    <!-- Contenu Phase 2: Logo Lupin -->
+                    <!-- Contenu Phase 2: Logo Lupin + Loader pourcentage -->
                     <div class="phone-content content-phase-2">
-                        <div class="lupin-logo-container">
-                            <img src="./images/expertise/logo_lupin.png" alt="Lupin" class="lupin-logo">
-                            <span class="lupin-loading-text">Lupin prépare votre espace...</span>
+                        <div class="phase2-loader-container">
+                            <img src="./images/expertise/logo_lupin.png" alt="Lupin" class="loader-logo">
+                            <span class="loader-percentage" id="loaderPercentage">0%</span>
+                            <span class="loader-text">Votre assistant IA se charge</span>
                         </div>
                     </div>
+
+                    <!-- Flèche sous le téléphone (Phase 2) -->
+                    <span class="scroll-arrow" id="scrollArrow">
+                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                    </span>
 
                     <!-- Contenu Phase 3: Screenshot -->
                     <div class="phone-content content-phase-3">
@@ -154,14 +240,21 @@
                     </div>
                 </div>
 
-                <!-- Phase 2: Diagramme simplifié + téléphone qui grandit -->
+                <!-- Phase 2: Loader + icônes animées depuis le téléphone -->
                 <div class="expertise-phase phase-2" data-phase="2">
-                    <div class="diagram-container">
-                        <!-- Conteneur SVG Phase 2 -->
-                        <div class="diagram-svg-wrapper">
-                            <img src="./images/expertise/phase2.svg"
-                                 alt="Architecture Phase 2"
-                                 class="phase2-svg-diagram">
+                    <!-- Icônes qui émergent du téléphone -->
+                    <div class="phase2-icons-container">
+                        <div class="phase2-icon icon-interface">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            <span class="icon-label">Interface</span>
+                        </div>
+                        <div class="phase2-icon icon-connectivity">
+                            <span class="material-symbols-outlined">hub</span>
+                            <span class="icon-label">Connectivité</span>
+                        </div>
+                        <div class="phase2-icon icon-data">
+                            <span class="material-symbols-outlined">shield_lock</span>
+                            <span class="icon-label">Données sécurisées</span>
                         </div>
                     </div>
                 </div>
@@ -180,35 +273,82 @@
             </div>
         </section>
 
-        <section class="vision" id="vision">
-            <div class="container">
-                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                    <h2 class="section-title" style="margin-bottom: 1.5rem;">Une Vision <span class="yellow">Élargie</span></h2>
-                    <p style="color: var(--color-text-secondary);">Notre expertise ne s'arrête pas à un écran. Nous concevons des écosystèmes complets qui s'adaptent à tous les usages de vos utilisateurs.</p>
+        <!-- Perspective -->
+        <section class="perspective" id="perspective">
+            <div class="container perspective-header">
+                <p class="eyebrow">Perspective</p>
+                <h2 class="section-title">Une perspective <span class="yellow">durable</span>.</h2>
+                <p class="perspective-lead">Après le produit, le cap à tenir : valeur, évolutivité, partenariat.</p>
+            </div>
+
+            <div class="perspective-grid">
+                <div class="perspective-card">
+                    <p class="eyebrow">Rentabilité</p>
+                    <h3>Une perspective rentable.</h3>
+                    <p class="perspective-key">Chaque projet doit générer de la valeur.</p>
+                    <ul class="perspective-points">
+                        <li>Temps gagné, ressources optimisées, décisions éclairées.</li>
+                        <li>La technologie n’est jamais une fin en soi.</li>
+                    </ul>
+                    <p class="perspective-body">Un logiciel n’est utile que s’il améliore réellement votre activité. Nous concevons chaque solution avec un objectif clair : un retour sur investissement mesurable.</p>
                 </div>
 
-                <div class="vision-grid">
-                    <div class="vision-card">
-                        <div class="vision-icon">
-                            <span class="material-symbols-outlined" style="font-size: 32px;">devices</span>
-                        </div>
-                        <h3>Multi-Support</h3>
-                        <p>Web, Mobile & Tablette</p>
-                    </div>
-                    <div class="vision-card">
-                        <div class="vision-icon">
-                            <span class="material-symbols-outlined" style="font-size: 32px;">cloud_sync</span>
-                        </div>
-                        <h3>Cloud Native</h3>
-                        <p>Scalabilité & Performance</p>
-                    </div>
-                    <div class="vision-card">
-                        <div class="vision-icon">
-                            <span class="material-symbols-outlined" style="font-size: 32px;">security</span>
-                        </div>
-                        <h3>Sécurité</h3>
-                        <p>Protection des Données</p>
-                    </div>
+                <div class="perspective-card">
+                    <p class="eyebrow">Évolutivité</p>
+                    <h3>Une perspective évolutive.</h3>
+                    <p class="perspective-key">Les besoins changent. Le logiciel doit suivre sans tout refaire.</p>
+                    <ul class="perspective-points">
+                        <li>Architecture pensée pour durer.</li>
+                        <li>Adaptable sans rupture ni dette inutile.</li>
+                    </ul>
+                    <p class="perspective-body">Vos outils doivent s’adapter à votre croissance, pas la freiner. Nos solutions sont conçues pour évoluer, sans rupture ni dette inutile.</p>
+                </div>
+
+                <div class="perspective-card">
+                    <p class="eyebrow">Partenariat</p>
+                    <h3>Une perspective durable.</h3>
+                    <p class="perspective-key">Tu n’es pas un prestataire jetable.</p>
+                    <ul class="perspective-points">
+                        <li>Accompagnement dans le temps, vision commune.</li>
+                        <li>Présence technique et humaine continue.</li>
+                    </ul>
+                    <p class="perspective-body">Nous ne livrons pas un produit et disparaissons. Nous construisons un partenariat capable de traverser les évolutions de votre activité.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Réalisations -->
+        <section class="realisations" id="realisations">
+            <div class="container realisations-header">
+                <p class="eyebrow">Réalisations</p>
+                <h2 class="section-title">Quand l’approche prend forme.</h2>
+                <p class="realisations-lead">Les preuves viennent en dernier : une fois la vision comprise.</p>
+            </div>
+
+            <div class="realisations-grid">
+                <div class="realisation-card">
+                    <h3>Optimisation d’un outil métier</h3>
+                    <ul>
+                        <li><strong>Problème :</strong> saisies lentes, erreurs fréquentes.</li>
+                        <li><strong>Solution :</strong> refonte des workflows et automatisation ciblée.</li>
+                        <li><strong>Bénéfice :</strong> gain de temps, fiabilité accrue, adoption rapide.</li>
+                    </ul>
+                </div>
+                <div class="realisation-card">
+                    <h3>Plateforme évolutive B2B</h3>
+                    <ul>
+                        <li><strong>Problème :</strong> ajout de nouvelles offres bloqué par l’existant.</li>
+                        <li><strong>Solution :</strong> architecture modulaire et API stabilisées.</li>
+                        <li><strong>Bénéfice :</strong> nouveaux services déployés sans rupture.</li>
+                    </ul>
+                </div>
+                <div class="realisation-card">
+                    <h3>Casviande.fr</h3>
+                    <ul>
+                        <li><strong>Problème :</strong> besoin de moderniser un outil métier critique.</li>
+                        <li><strong>Solution :</strong> interface repensée, process sécurisés.</li>
+                        <li><strong>Bénéfice :</strong> productivité accrue et confiance des équipes.</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -341,10 +481,23 @@
         // Set initial active section
         updateActiveNav();
 
+        // Force le scroll initial sur l'ancre #expertise (avec offset header)
+        (function() {
+            const expertiseAnchor = document.getElementById('expertise');
+            if (!expertiseAnchor) return;
+            const headerHeight = header?.offsetHeight || 0;
+            requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: expertiseAnchor.offsetTop - headerHeight,
+                    behavior: 'auto'
+                });
+            });
+        })();
+
         // Mobile Navigation Cube
         const navCube = document.getElementById('navCube');
         const cubeFaces = document.querySelectorAll('.cube-face');
-        const sectionOrder = ['hero', 'expertise', 'vision'];
+        const sectionOrder = ['hero', 'expertise', 'contact'];
         let currentCubePosition = 0;
 
         function updateCubePosition(sectionId) {
@@ -595,6 +748,19 @@
                 setTimeout(() => { isAnimating = false; }, 600);
             }
 
+            // Scroll direct vers la section expertise (avec offset header)
+            function scrollToExpertiseSection() {
+                if (!expertiseSection) return;
+                isAnimating = true;
+                const headerHeight = header?.offsetHeight || 0;
+                const targetPosition = expertiseSection.offsetTop - headerHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                setTimeout(() => { isAnimating = false; }, 700);
+            }
+
             // Vérifie si on est au-dessus du hero (tout en haut de la page)
             function isAboveHero() {
                 const headerHeight = header.offsetHeight;
@@ -693,8 +859,13 @@
                             e.preventDefault();
                             lastWheelTime = now;
                             scrollToSlide(currentSlide + 1);
+                        } else {
+                            // Dernière slide → bascule directement vers expertise
+                            e.preventDefault();
+                            lastWheelTime = now;
+                            scrollToExpertiseSection();
+                            return;
                         }
-                        // Dernière slide → laisser continuer vers expertise
                     } else if (e.deltaY < 0) {
                         // Scroll vers le haut
                         if (isAtExpertiseTop()) {
@@ -877,6 +1048,9 @@
 
             if (!expertiseSection || !phases.length) return;
 
+            // Le déclencheur principal est le conteneur d'animation
+            const expertiseTrigger = expertiseAnimation || expertiseSection;
+
             let currentPhase = 0;
             let isAnimating = false;
             let isInExpertiseSection = false;
@@ -884,8 +1058,85 @@
             const totalPhases = phases.length;
             const animationDuration = 800; // ms
 
+            // Variables pour le loader phase 2
+            let loaderInterval = null;
+            const loaderElement = document.getElementById('loaderPercentage');
+            const scrollArrow = document.getElementById('scrollArrow');
+            const loaderText = document.querySelector('.loader-text');
+            const iconInterface = document.querySelector('.icon-interface');
+            const iconConnectivity = document.querySelector('.icon-connectivity');
+            const iconData = document.querySelector('.icon-data');
+
             // Initialiser la première phase comme active
             phases[0].classList.add('active');
+
+            // Fonction pour animer le loader de 0% à 100%
+            function animateLoader() {
+                if (!loaderElement) return;
+
+                let progress = 0;
+                const duration = 2000; // 2 secondes
+                const steps = 100;
+                const stepDuration = duration / steps;
+
+                loaderElement.textContent = '0%';
+
+                loaderInterval = setInterval(() => {
+                    progress++;
+                    loaderElement.textContent = progress + '%';
+
+                    // Apparition des icônes dans l'ordre (avant 100%)
+                    if (progress >= 25 && iconInterface) {
+                        iconInterface.classList.add('visible');
+                    }
+                    if (progress >= 50 && iconConnectivity) {
+                        iconConnectivity.classList.add('visible');
+                    }
+                    if (progress >= 75 && iconData) {
+                        iconData.classList.add('visible');
+                    }
+
+                    if (progress >= 100) {
+                        clearInterval(loaderInterval);
+                        loaderInterval = null;
+
+                        // Changer le texte à 100%
+                        if (loaderText) {
+                            loaderText.textContent = 'IA chargée';
+                            loaderText.classList.add('loaded');
+                        }
+
+                        // Afficher la flèche après 0.5s
+                        setTimeout(() => {
+                            if (scrollArrow) {
+                                scrollArrow.classList.add('visible');
+                            }
+                        }, 500);
+                    }
+                }, stepDuration);
+            }
+
+            // Fonction pour arrêter le loader et cacher la flèche
+            function stopLoader() {
+                if (loaderInterval) {
+                    clearInterval(loaderInterval);
+                    loaderInterval = null;
+                }
+                if (loaderElement) {
+                    loaderElement.textContent = '0%';
+                }
+                if (loaderText) {
+                    loaderText.textContent = 'Votre assistant IA se charge';
+                    loaderText.classList.remove('loaded');
+                }
+                if (scrollArrow) {
+                    scrollArrow.classList.remove('visible');
+                }
+                // Cacher les icônes
+                if (iconInterface) iconInterface.classList.remove('visible');
+                if (iconConnectivity) iconConnectivity.classList.remove('visible');
+                if (iconData) iconData.classList.remove('visible');
+            }
 
             // Fonction pour changer de phase
             function goToPhase(phaseIndex) {
@@ -893,6 +1144,11 @@
                 if (phaseIndex === currentPhase) return;
 
                 isAnimating = true;
+
+                // Arrêter le loader si on quitte la phase 2
+                if (currentPhase === 1) {
+                    stopLoader();
+                }
 
                 // Retirer active de la phase actuelle
                 phases[currentPhase].classList.remove('active');
@@ -904,6 +1160,13 @@
                 expertiseAnimation.setAttribute('data-current-phase', phaseIndex + 1);
 
                 currentPhase = phaseIndex;
+
+                // Phase 2: Lancer le loader
+                if (currentPhase === 1) {
+                    setTimeout(() => {
+                        animateLoader();
+                    }, 600); // Attendre que l'animation du téléphone soit terminée
+                }
 
                 // Activer l'animation du texte elegant sur la phase 3
                 if (currentPhase === 2 && elegantText) {
@@ -922,7 +1185,7 @@
 
             // Vérifier si la section expertise est visible
             function isExpertiseInView() {
-                const rect = expertiseSection.getBoundingClientRect();
+                const rect = expertiseTrigger.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
                 // La section est "in view" si elle occupe la majorité du viewport
                 return rect.top <= 100 && rect.bottom >= viewportHeight - 100;
@@ -930,13 +1193,13 @@
 
             // Vérifier si on est au début de la section (pour sortir vers le haut)
             function isAtSectionTop() {
-                const rect = expertiseSection.getBoundingClientRect();
+                const rect = expertiseTrigger.getBoundingClientRect();
                 return rect.top >= -50 && rect.top <= 100;
             }
 
             // Vérifier si on est à la fin de la section (pour sortir vers le bas)
             function isAtSectionBottom() {
-                const rect = expertiseSection.getBoundingClientRect();
+                const rect = expertiseTrigger.getBoundingClientRect();
                 return rect.bottom <= window.innerHeight + 50 && rect.bottom >= window.innerHeight - 100;
             }
 
@@ -993,7 +1256,7 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
                         // Reset à la phase 1 quand on entre par le haut
-                        const rect = expertiseSection.getBoundingClientRect();
+                        const rect = expertiseTrigger.getBoundingClientRect();
                         if (rect.top > 0) {
                             goToPhase(0);
                         }
@@ -1001,7 +1264,7 @@
                 });
             }, { threshold: [0.5] });
 
-            observer.observe(expertiseSection);
+            observer.observe(expertiseTrigger);
         })();
 
     </script>
