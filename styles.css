@@ -92,7 +92,7 @@ header {
 
 header.scrolled {
     outline: 1px solid var(--header-outline-color, rgba(0, 0, 0, 0.2));
-    top: 5px;
+    top: 0;
     border-radius: 0;
     box-shadow: 0 2px 10px #0000002e;
     width: 100%;
@@ -120,11 +120,33 @@ header.scrolled::after {
 }
 
 .main-nav {
-    display: flex;
+    display: none;
     gap: 2rem;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+    .main-nav {
+        display: flex;
+        gap: 1rem;
+    }
+    .main-nav .nav-link {
+        font-size: 14px;
+    }
+    .mobile-nav-cube {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-nav {
+        gap: 2rem;
+    }
+    .main-nav .nav-link {
+        font-size: 16px;
+    }
 }
 
 .nav-link {
@@ -202,7 +224,7 @@ header.scrolled::after {
 }
 
 .logo-image {
-    height: 85px;
+    height: 60px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -230,7 +252,7 @@ header.scrolled::after {
 
 /* Mobile Navigation Cube */
 .mobile-nav-cube {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     perspective: 200px;
@@ -334,13 +356,12 @@ header.scrolled::after {
     font-weight: 500;
     font-size: 0.875rem;
     /* border: 1.5px solid #afaeae52; */
-    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, left 0.6s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     overflow: hidden;
     z-index: 1;
-    left: -6px;
     /* border-style: outset; */
     box-shadow: 0 2px 6px #00000054;
 }
@@ -387,6 +408,39 @@ header.scrolled::after {
     opacity: 1;
 }
 
+/* Hero Scroll Pinning */
+.hero-scroll-container {
+    /* Hauteur = (nombre de slides + 1) × viewport → 1 viewport entier de scroll par slide */
+    height: calc((100vh - 72px) * 5);
+    min-height: calc((100vh - 72px) * 5);
+    flex-shrink: 0;
+    position: relative;
+}
+
+.hero-pinned-viewport {
+    height: calc(100vh - 72px);
+    width: 100%;
+    overflow: hidden;
+    z-index: 20;
+    background: #ffffff;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* Hero */
 .hero {
     padding-top: 4rem;
@@ -396,6 +450,16 @@ header.scrolled::after {
     flex-direction: column;
     align-items: center;
     overflow-x: clip;
+}
+
+/* Hero = 67vh sur grands écrans (titre + slides compacts) */
+@media (min-width: 1024px) {
+    .hero {
+        min-height: calc(67vh - 72px);
+        justify-content: center;
+        padding-top: 0;
+        padding-bottom: 10vh;
+    }
 }
 
 /* Hero Scroll Pinning - Desktop only */
@@ -416,6 +480,14 @@ header.scrolled::after {
     padding-top: 2.5rem;
 }
 
+@media (min-width: 1024px) {
+    .hero .container {
+        padding-top: 0;
+        flex: 1;
+        justify-content: center;
+    }
+}
+
 .hero h1 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -427,8 +499,14 @@ header.scrolled::after {
 
 @media (min-width: 768px) {
     .hero h1 {
-        font-size: 3.75rem;
+        font-size: 3rem;
         padding: 0;
+    }
+}
+
+@media (min-width: 1920px) {
+    .hero h1 {
+        font-size: 3.75rem;
     }
 }
 
@@ -508,8 +586,60 @@ header.scrolled::after {
     }
 }
 
+@media (min-width: 1024px) {
+    .carousel-container {
+        padding-top: 1.5rem;
+        padding-bottom: 1rem;
+    }
+    .hero h1 {
+        margin-bottom: 0;
+    }
+    /* Ratio 5:3 conservé, taille réduite pour rentrer dans le viewport */
+    .project-card {
+        flex: 0 0 800px;
+        height: 480px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .project-card {
+        flex: 0 0 900px;
+        height: 540px;
+    }
+}
+
 .project-card:hover {
     transform: translateY(-4px);
+}
+
+/* Carousel Dots Indicator */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0 0.5rem;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+    background: #2563eb;
+    width: 24px;
+    border-radius: 4px;
+}
+
+.carousel-dot:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .card-bg {
@@ -1126,74 +1256,6 @@ header.scrolled::after {
     margin-bottom: 1rem;
     flex-shrink: 0;
 }
-.data-flow-animation {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 180px;
-    height: 300px;
-    margin: 0 auto;
-}
-
-.data-flow-animation {
-    position: relative;
-    top: -18px;
-    left: -0.7px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 170px;
-    height: 137px;
-    margin: 0 auto;
-}
-
-@media (max-width: 640px) {
-    .data-flow-animation {
-        width: 140px;
-        height: 240px;
-    }
-}
-
-svg.flow-lines {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transform: none;
-}
-
-.flow-path {
-    fill: none;
-    stroke: #0f172a;
-    stroke-width: 0.8;
-    stroke-dasharray: 2 4;
-    opacity: 0.25;
-}
-
-.flow-origin {
-    fill: #0f172a;
-    opacity: 0.85;
-}
-
-.flow-particle {
-    fill: #0f172a;
-    opacity: 0.95;
-}
-
-.flow-node.node-user {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background: #ffffff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    z-index: 2;
-}
 
 .material-symbols-outlined
  {
@@ -1556,7 +1618,13 @@ header[data-section="contact"] .btn-contact {
 
 @media (min-width: 768px) {
     .slide-main-text .text-line {
-        font-size: 4rem;
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1920px) {
+    .slide-main-text .text-line {
+        font-size: 3.5rem;
     }
 }
 
@@ -1595,7 +1663,7 @@ header[data-section="contact"] .btn-contact {
 
 @media (min-width: 768px) {
     .slide-subtext {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -1607,8 +1675,8 @@ header[data-section="contact"] .btn-contact {
 
 /* Slide CTA Button */
 .slide-cta-btn {
-    margin-top: 2.5rem;
-    padding: 0.875rem 2rem;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.75rem;
     background: #2563eb;
     color: #ffffff;
     font-size: 0.9rem;
@@ -1759,11 +1827,6 @@ header[data-section="contact"] .btn-contact {
     /* La hauteur est maintenant gérée par le parent .expertise */
 }
 
-.expertise-phase.phase-3.active{
-    position: relative;
-    top: 170px;
-}
-
 .expertise-phase {
     width: 100%;
     height: 100%;
@@ -1775,99 +1838,20 @@ header[data-section="contact"] .btn-contact {
     left: 0;
     opacity: 0;
     pointer-events: none;
-    /* Fade OUT : rapide, sans délai */
-    transition: opacity 0.2s ease-out;
+    transition: opacity 0.3s ease-out;
 }
 
 .expertise-phase.active {
     opacity: 1;
     pointer-events: auto;
-    /* Fade IN : avec délai réduit (après le mouvement du téléphone) */
-    transition: opacity 0.3s ease-in 0.2s;
+    transition: opacity 0.4s ease-in 0.15s;
 }
 
-/* ==========================================
-   Téléphone Unifié - Se déplace entre les phases
-   ========================================== */
-.unified-phone {
-    width: 690px;
-    position: absolute;
-    z-index: 100;
-    /* Position fixe au centre - on utilise transform pour tout */
-    top: 50%;
-    left: 50%;
-    /* Transition fluide uniquement sur transform - durée réduite */
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.unified-phone .phone-image {
-    width: 100%;
-    height: auto;
-}
-
-/* Contenus du téléphone - cachés par défaut */
-.unified-phone .phone-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
-    /* Fade OUT : rapide, sans délai */
-    transition: opacity 0s ease-out;
-}
-
-/* Fade IN : avec délai réduit (après le mouvement du téléphone) */
-[data-current-phase="1"] .unified-phone .content-phase-1,
-[data-current-phase="2"] .unified-phone .content-phase-2,
-[data-current-phase="3"] .unified-phone .content-phase-3 {
-    transition: opacity 0.25s ease-in 0.2s;
-}
-
-/* === Position Phase 1: Petit, en bas du diagramme === */
-[data-current-phase="1"] .unified-phone {
-    /* translateY positif = vers le bas depuis le centre */
-    transform: translate(-49.7%, 14.9%) scale(0.9);
-}
-
-[data-current-phase="1"] .unified-phone .content-phase-1 {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.4);
-}
-
-/* === Position Phase 2: Moyen, centré === */
-[data-current-phase="2"] .unified-phone {
-    /* Centré verticalement, légèrement plus grand */
-    transform: translate(-50%, -50%) scale(1.2);
-}
-
-[data-current-phase="2"] .unified-phone .content-phase-2 {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-}
-
-/* === Position Phase 3: Grand, centré === */
-[data-current-phase="3"] .unified-phone {
-    /* Centré, encore plus grand */
-    transform: translate(-50%, -65%) scale(1.8);
-}
-
-[data-current-phase="3"] .unified-phone .content-phase-3 {
-    opacity: 1;
-    width: 129px;
-    height: 268px;
-    border-radius: 3px;
-    overflow: hidden;
-    top: 12%;
-    left: 49.8%;
-    transform: translateX(-50%);
-}
-
-[data-current-phase="3"] .unified-phone .phone-screenshot {
+/* Vidéos expertise - remplissent la phase */
+.expertise-video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top;
+    object-fit: contain;
 }
 
 /* ==========================================
@@ -2411,67 +2395,6 @@ header[data-section="contact"] .btn-contact {
     }
 }
 
-/* ==========================================
-   SVG Diagrams - Phase 1 & 2
-   ========================================== */
-
-/* Phase 1 : Conteneur SVG */
-.phase-1 .diagram-container {
-    position: relative;
-    width: 90%;
-    height: 80%;
-    margin: 0 auto;
-}
-
-.phase-1 .diagram-svg-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 0;
-}
-
-.phase1-svg-diagram {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
-
-/* Phase 2 : Conteneur SVG */
-.phase-2 .diagram-container {
-    position: relative;
-    width: 90%;
-    max-width: 41.67vw; /* 800px à 1920px */
-    height: 40%;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.phase-2 .diagram-svg-wrapper {
-    position: absolute;
-    top: -22%;
-    left: -0.3%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 0;
-}
-
-.phase2-svg-diagram {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
 
 /* Flèches SVG - Classe conteneur pour SVG inline */
 .diagram-arrows {
@@ -2558,213 +2481,3 @@ header[data-section="contact"] .btn-contact {
     background: #000;
 } */
 
-/* ==========================================
-   Phase 3: Téléphone + Interface LLM + Texte
-   ========================================== */
-.phase-3 {
-    flex-direction: column;
-    gap: 1.56vw; /* 3rem ≈ 48px */
-}
-
-.phase3-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.56vw; /* 3rem ≈ 48px */
-}
-
-/* Texte style elegant */
-.elegant-text {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 0.26vw; /* 0.5rem ≈ 8px */
-    position: relative;
-    top: 9.375vw; /* 180px */
-}
-
-.elegant-line {
-    font-size: 2.08vw; /* 2.5rem ≈ 40px */
-    font-weight: 700;
-    color: #000;
-    line-height: 1.2;
-    opacity: 0;
-    transform: translateY(1.56vw); /* 30px */
-}
-
-@media (min-width: 768px) {
-    .elegant-line {
-        font-size: 2.92vw; /* 3.5rem ≈ 56px */
-    }
-}
-
-/* Animation du texte elegant (sera activée par JS) - durées réduites */
-.elegant-text.animate .elegant-line {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.elegant-text.animate .line-1 {
-    transition-delay: 0.1s;
-}
-
-.elegant-text.animate .line-2 {
-    transition-delay: 0.25s;
-}
-
-/* ==========================================
-   Phase 2: Loader pourcentage + Icônes animées
-   ========================================== */
-
-/* Loader pourcentage dans le téléphone */
-.phase2-loader-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3vw;
-    width: 100%;
-    height: 100%;
-}
-
-.loader-logo {
-    width: 2.7vw;
-    height: auto;
-}
-
-.loader-percentage {
-    font-size: 0.5vw;
-    font-weight: 600;
-    color: #555;
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
-}
-
-.loader-text {
-    font-size: 0.20vw;
-    font-weight: 500;
-    color: #888;
-    font-family: var(--font-display);
-    white-space: nowrap;
-    transition: color 0.3s ease;
-}
-
-.loader-text.loaded {
-    color: #22c55e;
-    font-weight: 600;
-}
-
-/* Flèche invitant à scroller - sous le téléphone */
-.scroll-arrow {
-    position: absolute;
-    bottom: -30%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-    z-index: 101;
-}
-
-.scroll-arrow.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.scroll-arrow .material-symbols-outlined {
-    font-size: 2rem;
-    color: #000;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    animation: bounceArrow 1.5s ease-in-out infinite;
-}
-
-@keyframes bounceArrow {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(8px);
-    }
-}
-
-/* Conteneur des icônes - positionné au centre du téléphone */
-.phase2-icons-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-/* Icônes de base - cachées au centre, derrière le téléphone */
-.phase2-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.3);
-    z-index: 50;
-    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.phase2-icon .material-symbols-outlined {
-    font-size: 2rem;
-    color: #2563eb;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-}
-
-.phase2-icon .icon-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #000;
-    white-space: nowrap;
-}
-
-/* Positions finales des icônes - contrôlées par JS via classes */
-
-/* Interface - haut gauche */
-.icon-interface.visible {
-    opacity: 1;
-    transform: translate(-229%, -180%) scale(1);
-}
-
-/* Connectivité - bas droit */
-.icon-connectivity.visible {
-    opacity: 1;
-    transform: translate(100%, -40%) scale(1);
-}
-
-/* Données sécurisées - bas gauche */
-.icon-data.visible {
-    opacity: 1;
-    transform: translate(-180%, 70%) scale(1);
-}
-
-/* Couleurs spécifiques pour chaque icône */
-.icon-interface .material-symbols-outlined {
-    color: #2563eb !important;
-}
-
-.icon-connectivity .material-symbols-outlined {
-    color: #f97316 !important;
-}
-
-.icon-data .material-symbols-outlined {
-    color: #22c55e !important;
-}
